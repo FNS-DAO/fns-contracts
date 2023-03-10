@@ -10,7 +10,6 @@ dotenv.config();
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.17",
   defaultNetwork: "hyperspace",
   networks: {
     hyperspace: {
@@ -24,6 +23,15 @@ const config: HardhatUserConfig = {
     tests: "./test",
     cache: "./cache",
     artifacts: "./artifacts",
+  },
+  solidity: {
+    version: "0.8.17",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200,
+      },
+    },
   },
 };
 
