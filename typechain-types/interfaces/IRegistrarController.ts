@@ -38,6 +38,7 @@ export declare namespace IPriceOracle {
 export interface IRegistrarControllerInterface extends utils.Interface {
   functions: {
     "available(string)": FunctionFragment;
+    "maxExpirationTime()": FunctionFragment;
     "nameExpires(string)": FunctionFragment;
     "register(string,address,uint256,address,bytes[],bool)": FunctionFragment;
     "renew(string,uint256)": FunctionFragment;
@@ -48,6 +49,7 @@ export interface IRegistrarControllerInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | "available"
+      | "maxExpirationTime"
       | "nameExpires"
       | "register"
       | "renew"
@@ -58,6 +60,10 @@ export interface IRegistrarControllerInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "available",
     values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "maxExpirationTime",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "nameExpires",
@@ -88,6 +94,10 @@ export interface IRegistrarControllerInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(functionFragment: "available", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "maxExpirationTime",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "nameExpires",
     data: BytesLike
@@ -132,6 +142,8 @@ export interface IRegistrarController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
+    maxExpirationTime(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     nameExpires(
       name: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -170,6 +182,8 @@ export interface IRegistrarController extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
+  maxExpirationTime(overrides?: CallOverrides): Promise<BigNumber>;
+
   nameExpires(
     name: PromiseOrValue<string>,
     overrides?: CallOverrides
@@ -207,6 +221,8 @@ export interface IRegistrarController extends BaseContract {
       name: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    maxExpirationTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     nameExpires(
       name: PromiseOrValue<string>,
@@ -249,6 +265,8 @@ export interface IRegistrarController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    maxExpirationTime(overrides?: CallOverrides): Promise<BigNumber>;
+
     nameExpires(
       name: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -287,6 +305,8 @@ export interface IRegistrarController extends BaseContract {
       name: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    maxExpirationTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     nameExpires(
       name: PromiseOrValue<string>,

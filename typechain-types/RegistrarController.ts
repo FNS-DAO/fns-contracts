@@ -45,6 +45,7 @@ export interface RegistrarControllerInterface extends utils.Interface {
     "MIN_REGISTRATION_DURATION()": FunctionFragment;
     "available(string)": FunctionFragment;
     "base()": FunctionFragment;
+    "maxExpirationTime()": FunctionFragment;
     "nameExpires(string)": FunctionFragment;
     "owner()": FunctionFragment;
     "prices()": FunctionFragment;
@@ -53,11 +54,12 @@ export interface RegistrarControllerInterface extends utils.Interface {
     "renounceOwnership()": FunctionFragment;
     "rentPrice(string,uint256)": FunctionFragment;
     "reverseRegistrar()": FunctionFragment;
+    "setMaxExpirationTime(uint256)": FunctionFragment;
     "setPriceOracle(address)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "valid(string)": FunctionFragment;
-    "withdraw()": FunctionFragment;
+    "withdraw(address)": FunctionFragment;
     "withdrawERC20(address,address,uint256)": FunctionFragment;
   };
 
@@ -66,6 +68,7 @@ export interface RegistrarControllerInterface extends utils.Interface {
       | "MIN_REGISTRATION_DURATION"
       | "available"
       | "base"
+      | "maxExpirationTime"
       | "nameExpires"
       | "owner"
       | "prices"
@@ -74,6 +77,7 @@ export interface RegistrarControllerInterface extends utils.Interface {
       | "renounceOwnership"
       | "rentPrice"
       | "reverseRegistrar"
+      | "setMaxExpirationTime"
       | "setPriceOracle"
       | "supportsInterface"
       | "transferOwnership"
@@ -91,6 +95,10 @@ export interface RegistrarControllerInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: "base", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "maxExpirationTime",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "nameExpires",
     values: [PromiseOrValue<string>]
@@ -125,6 +133,10 @@ export interface RegistrarControllerInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "setMaxExpirationTime",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "setPriceOracle",
     values: [PromiseOrValue<string>]
   ): string;
@@ -140,7 +152,10 @@ export interface RegistrarControllerInterface extends utils.Interface {
     functionFragment: "valid",
     values: [PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(functionFragment: "withdraw", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "withdraw",
+    values: [PromiseOrValue<string>]
+  ): string;
   encodeFunctionData(
     functionFragment: "withdrawERC20",
     values: [
@@ -157,6 +172,10 @@ export interface RegistrarControllerInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "available", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "base", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "maxExpirationTime",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "nameExpires",
     data: BytesLike
   ): Result;
@@ -171,6 +190,10 @@ export interface RegistrarControllerInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "rentPrice", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "reverseRegistrar",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setMaxExpirationTime",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -279,6 +302,8 @@ export interface RegistrarController extends BaseContract {
 
     base(overrides?: CallOverrides): Promise<[string]>;
 
+    maxExpirationTime(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     nameExpires(
       name: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -320,6 +345,11 @@ export interface RegistrarController extends BaseContract {
 
     reverseRegistrar(overrides?: CallOverrides): Promise<[string]>;
 
+    setMaxExpirationTime(
+      expTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     setPriceOracle(
       _prices: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -341,6 +371,7 @@ export interface RegistrarController extends BaseContract {
     ): Promise<[boolean]>;
 
     withdraw(
+      to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -360,6 +391,8 @@ export interface RegistrarController extends BaseContract {
   ): Promise<boolean>;
 
   base(overrides?: CallOverrides): Promise<string>;
+
+  maxExpirationTime(overrides?: CallOverrides): Promise<BigNumber>;
 
   nameExpires(
     name: PromiseOrValue<string>,
@@ -398,6 +431,11 @@ export interface RegistrarController extends BaseContract {
 
   reverseRegistrar(overrides?: CallOverrides): Promise<string>;
 
+  setMaxExpirationTime(
+    expTime: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   setPriceOracle(
     _prices: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -419,6 +457,7 @@ export interface RegistrarController extends BaseContract {
   ): Promise<boolean>;
 
   withdraw(
+    to: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -438,6 +477,8 @@ export interface RegistrarController extends BaseContract {
     ): Promise<boolean>;
 
     base(overrides?: CallOverrides): Promise<string>;
+
+    maxExpirationTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     nameExpires(
       name: PromiseOrValue<string>,
@@ -474,6 +515,11 @@ export interface RegistrarController extends BaseContract {
 
     reverseRegistrar(overrides?: CallOverrides): Promise<string>;
 
+    setMaxExpirationTime(
+      expTime: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     setPriceOracle(
       _prices: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -494,7 +540,10 @@ export interface RegistrarController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    withdraw(overrides?: CallOverrides): Promise<void>;
+    withdraw(
+      to: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     withdrawERC20(
       token: PromiseOrValue<string>,
@@ -555,6 +604,8 @@ export interface RegistrarController extends BaseContract {
 
     base(overrides?: CallOverrides): Promise<BigNumber>;
 
+    maxExpirationTime(overrides?: CallOverrides): Promise<BigNumber>;
+
     nameExpires(
       name: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -592,6 +643,11 @@ export interface RegistrarController extends BaseContract {
 
     reverseRegistrar(overrides?: CallOverrides): Promise<BigNumber>;
 
+    setMaxExpirationTime(
+      expTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     setPriceOracle(
       _prices: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -613,6 +669,7 @@ export interface RegistrarController extends BaseContract {
     ): Promise<BigNumber>;
 
     withdraw(
+      to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -635,6 +692,8 @@ export interface RegistrarController extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     base(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    maxExpirationTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     nameExpires(
       name: PromiseOrValue<string>,
@@ -673,6 +732,11 @@ export interface RegistrarController extends BaseContract {
 
     reverseRegistrar(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    setMaxExpirationTime(
+      expTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     setPriceOracle(
       _prices: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -694,6 +758,7 @@ export interface RegistrarController extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     withdraw(
+      to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

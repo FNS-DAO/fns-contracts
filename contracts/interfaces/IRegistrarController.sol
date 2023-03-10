@@ -22,4 +22,8 @@ interface IRegistrarController {
     ) external payable;
 
     function renew(string calldata name, uint256 duration) external payable;
+
+    /// @dev Max expiration time for register and renew
+    /// @dev 0 means no limit.
+    function maxExpirationTime() external view returns (uint256);
 }

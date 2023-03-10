@@ -16,7 +16,8 @@ error NameNotAvailable(string name);
 error DurationTooShort(uint256 duration);
 error ResolverRequiredWhenDataSupplied();
 error InsufficientValue();
-error Unauthorised(bytes32 node);
+error InvalidExpirationTime();
+error InvalidRecipient();
 
 /**
  * @dev A registrar controller for registering and renewing names at fixed cost.
@@ -33,6 +34,7 @@ contract RegistrarController is IRegistrarController, Ownable, IERC165 {
     IRegistrar public immutable base;
     IReverseRegistrar public immutable reverseRegistrar;
     IPriceOracle public prices;
+    uint256 private _maxExpirationTime;
 
     event NameRegistered(
         string name,
@@ -44,14 +46,11 @@ contract RegistrarController is IRegistrarController, Ownable, IERC165 {
     );
     event NameRenewed(string name, bytes32 indexed label, uint256 cost, uint256 expires);
 
-    constructor(
-        IRegistrar _base,
-        IPriceOracle _prices,
-        IReverseRegistrar _reverseRegistrar
-    ) {
+    constructor(IRegistrar _base, IPriceOracle _prices, IReverseRegistrar _reverseRegistrar) {
         base = _base;
         prices = _prices;
         reverseRegistrar = _reverseRegistrar;
+        _maxExpirationTime = 0;
     }
 
     function valid(string memory name) public pure override returns (bool) {
@@ -68,12 +67,10 @@ contract RegistrarController is IRegistrarController, Ownable, IERC165 {
         return base.nameExpires(uint256(label));
     }
 
-    function rentPrice(string memory name, uint256 duration)
-        public
-        view
-        override
-        returns (IPriceOracle.Price memory price)
-    {
+    function rentPrice(
+        string memory name,
+        uint256 duration
+    ) public view override returns (IPriceOracle.Price memory price) {
         bytes32 label = keccak256(bytes(name));
         price = prices.price(name, base.nameExpires(uint256(label)), duration);
     }
@@ -103,6 +100,9 @@ contract RegistrarController is IRegistrarController, Ownable, IERC165 {
         }
 
         uint256 expires = base.register(name, _owner, duration, resolver);
+        if (_maxExpirationTime > 0 && expires > _maxExpirationTime) {
+            revert InvalidExpirationTime();
+        }
 
         bytes32 label = keccak256(bytes(name));
         if (data.length > 0) {
@@ -128,6 +128,9 @@ contract RegistrarController is IRegistrarController, Ownable, IERC165 {
         uint256 expires;
         bytes32 label = keccak256(bytes(name));
         expires = base.renew(uint256(label), duration);
+        if (_maxExpirationTime > 0 && expires > _maxExpirationTime) {
+            revert InvalidExpirationTime();
+        }
 
         if (msg.value > price.base) {
             payable(msg.sender).transfer(msg.value - price.base);
@@ -136,43 +139,47 @@ contract RegistrarController is IRegistrarController, Ownable, IERC165 {
         emit NameRenewed(name, label, msg.value, expires);
     }
 
-    function setPriceOracle(IPriceOracle _prices) external onlyOwner {
-        prices = _prices;
-    }
-
-    function withdraw() external {
-        payable(owner()).transfer(address(this).balance);
-    }
-
-    function withdrawERC20(
-        IERC20 token,
-        address to,
-        uint256 amount
-    ) external onlyOwner {
-        token.safeTransfer(to, amount);
-    }
-
     function supportsInterface(bytes4 interfaceID) external pure returns (bool) {
         return interfaceID == type(IERC165).interfaceId || interfaceID == type(IRegistrarController).interfaceId;
     }
 
+    function maxExpirationTime() external view override returns (uint256) {
+        return _maxExpirationTime;
+    }
+
+    /* Owner functions */
+
+    function setPriceOracle(IPriceOracle _prices) external onlyOwner {
+        prices = _prices;
+    }
+
+    function withdraw(address to) external onlyOwner {
+        if (to == address(0)) {
+            revert InvalidRecipient();
+        }
+        payable(to).transfer(address(this).balance);
+    }
+
+    function withdrawERC20(IERC20 token, address to, uint256 amount) external onlyOwner {
+        if (to == address(0)) {
+            revert InvalidRecipient();
+        }
+        token.safeTransfer(to, amount);
+    }
+
+    function setMaxExpirationTime(uint256 expTime) external onlyOwner {
+        _maxExpirationTime = expTime;
+    }
+
     /* Internal functions */
 
-    function _setRecords(
-        address resolverAddress,
-        bytes32 label,
-        bytes[] calldata data
-    ) internal {
+    function _setRecords(address resolverAddress, bytes32 label, bytes[] calldata data) internal {
         bytes32 nodehash = keccak256(abi.encodePacked(FIL_NODE, label));
         IResolver resolver = IResolver(resolverAddress);
         resolver.multicallWithNodeCheck(nodehash, data);
     }
 
-    function _setReverseRecord(
-        string memory name,
-        address resolver,
-        address _owner
-    ) internal {
+    function _setReverseRecord(string memory name, address resolver, address _owner) internal {
         reverseRegistrar.setNameForAddr(msg.sender, _owner, resolver, string.concat(name, ".fil"));
     }
 }

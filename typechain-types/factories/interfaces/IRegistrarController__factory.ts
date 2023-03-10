@@ -30,6 +30,19 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "maxExpirationTime",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "string",
@@ -159,7 +172,7 @@ const _abi = [
     stateMutability: "view",
     type: "function",
   },
-];
+] as const;
 
 export class IRegistrarController__factory {
   static readonly abi = _abi;
