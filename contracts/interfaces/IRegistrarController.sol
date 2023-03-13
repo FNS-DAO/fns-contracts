@@ -24,6 +24,7 @@ interface IRegistrarController {
     error InvalidExpirationTime();
     error InvalidRecipient();
     error InvalidNameLength();
+    error RegisterCountLimited();
 
     /********************* functions *********************/
     function valid(string memory name) external view returns (bool);
@@ -51,4 +52,8 @@ interface IRegistrarController {
 
     /// @dev Minimum name length can be registered
     function minLengthAvailable() external view returns (uint256);
+
+    /// @dev Limit the remaining count that can be registered
+    /// @dev type(uint256).max means no limit
+    function remainRegisterable() external view returns (uint256);
 }

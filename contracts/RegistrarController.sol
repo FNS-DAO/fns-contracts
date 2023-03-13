@@ -29,6 +29,7 @@ contract RegistrarController is IRegistrarController, Ownable, IERC165 {
     IPriceOracle public prices;
     uint256 private _maxExpirationTime;
     uint256 private _minLengthAvailable;
+    uint256 private _remainRegisterable;
 
     constructor(IRegistrar _base, IPriceOracle _prices, IReverseRegistrar _reverseRegistrar) {
         base = _base;
@@ -36,6 +37,7 @@ contract RegistrarController is IRegistrarController, Ownable, IERC165 {
         reverseRegistrar = _reverseRegistrar;
         _maxExpirationTime = 0;
         _minLengthAvailable = 3;
+        _remainRegisterable = type(uint256).max;
     }
 
     function valid(string memory name) public view override returns (bool) {
@@ -76,6 +78,12 @@ contract RegistrarController is IRegistrarController, Ownable, IERC165 {
         }
         if (data.length > 0 && resolver == address(0)) {
             revert ResolverRequiredWhenDataSupplied();
+        }
+        if (_remainRegisterable == 0) {
+            revert RegisterCountLimited();
+        }
+        if (_remainRegisterable != type(uint256).max) {
+            _remainRegisterable--;
         }
 
         IPriceOracle.Price memory price = rentPrice(name, duration);
@@ -136,6 +144,10 @@ contract RegistrarController is IRegistrarController, Ownable, IERC165 {
         return _minLengthAvailable;
     }
 
+    function remainRegisterable() external view override returns (uint256) {
+        return _remainRegisterable;
+    }
+
     /********************* Owner functions *********************/
 
     function setPriceOracle(IPriceOracle _prices) external onlyOwner {
@@ -166,6 +178,10 @@ contract RegistrarController is IRegistrarController, Ownable, IERC165 {
         }
         emit MinLengthUpdated(_minLengthAvailable, minLen);
         _minLengthAvailable = minLen;
+    }
+
+    function setRemainRegisterable(uint256 count) external onlyOwner {
+        _remainRegisterable = count;
     }
 
     /********************* Internal functions *********************/

@@ -46,6 +46,7 @@ export interface IRegistrarControllerInterface extends utils.Interface {
     "minLengthAvailable()": FunctionFragment;
     "nameExpires(string)": FunctionFragment;
     "register(string,address,uint256,address,bytes[],bool)": FunctionFragment;
+    "remainRegisterable()": FunctionFragment;
     "renew(string,uint256)": FunctionFragment;
     "rentPrice(string,uint256)": FunctionFragment;
     "valid(string)": FunctionFragment;
@@ -58,6 +59,7 @@ export interface IRegistrarControllerInterface extends utils.Interface {
       | "minLengthAvailable"
       | "nameExpires"
       | "register"
+      | "remainRegisterable"
       | "renew"
       | "rentPrice"
       | "valid"
@@ -91,6 +93,10 @@ export interface IRegistrarControllerInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
+    functionFragment: "remainRegisterable",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "renew",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
@@ -117,6 +123,10 @@ export interface IRegistrarControllerInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "register", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "remainRegisterable",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "renew", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "rentPrice", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "valid", data: BytesLike): Result;
@@ -223,6 +233,8 @@ export interface IRegistrarController extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    remainRegisterable(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     renew(
       name: PromiseOrValue<string>,
       duration: PromiseOrValue<BigNumberish>,
@@ -265,6 +277,8 @@ export interface IRegistrarController extends BaseContract {
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  remainRegisterable(overrides?: CallOverrides): Promise<BigNumber>;
+
   renew(
     name: PromiseOrValue<string>,
     duration: PromiseOrValue<BigNumberish>,
@@ -306,6 +320,8 @@ export interface IRegistrarController extends BaseContract {
       reverseRecord: PromiseOrValue<boolean>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    remainRegisterable(overrides?: CallOverrides): Promise<BigNumber>;
 
     renew(
       name: PromiseOrValue<string>,
@@ -391,6 +407,8 @@ export interface IRegistrarController extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    remainRegisterable(overrides?: CallOverrides): Promise<BigNumber>;
+
     renew(
       name: PromiseOrValue<string>,
       duration: PromiseOrValue<BigNumberish>,
@@ -434,6 +452,10 @@ export interface IRegistrarController extends BaseContract {
       data: PromiseOrValue<BytesLike>[],
       reverseRecord: PromiseOrValue<boolean>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    remainRegisterable(
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     renew(

@@ -54,6 +54,11 @@ const _abi = [
   },
   {
     inputs: [],
+    name: "RegisterCountLimited",
+    type: "error",
+  },
+  {
+    inputs: [],
     name: "ResolverRequiredWhenDataSupplied",
     type: "error",
   },
@@ -250,6 +255,19 @@ const _abi = [
     name: "register",
     outputs: [],
     stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "remainRegisterable",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {

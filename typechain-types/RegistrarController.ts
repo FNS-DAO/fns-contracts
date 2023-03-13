@@ -51,6 +51,7 @@ export interface RegistrarControllerInterface extends utils.Interface {
     "owner()": FunctionFragment;
     "prices()": FunctionFragment;
     "register(string,address,uint256,address,bytes[],bool)": FunctionFragment;
+    "remainRegisterable()": FunctionFragment;
     "renew(string,uint256)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "rentPrice(string,uint256)": FunctionFragment;
@@ -58,6 +59,7 @@ export interface RegistrarControllerInterface extends utils.Interface {
     "setMaxExpirationTime(uint256)": FunctionFragment;
     "setMinLengthAvailable(uint256)": FunctionFragment;
     "setPriceOracle(address)": FunctionFragment;
+    "setRemainRegisterable(uint256)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "valid(string)": FunctionFragment;
@@ -76,6 +78,7 @@ export interface RegistrarControllerInterface extends utils.Interface {
       | "owner"
       | "prices"
       | "register"
+      | "remainRegisterable"
       | "renew"
       | "renounceOwnership"
       | "rentPrice"
@@ -83,6 +86,7 @@ export interface RegistrarControllerInterface extends utils.Interface {
       | "setMaxExpirationTime"
       | "setMinLengthAvailable"
       | "setPriceOracle"
+      | "setRemainRegisterable"
       | "supportsInterface"
       | "transferOwnership"
       | "valid"
@@ -125,6 +129,10 @@ export interface RegistrarControllerInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
+    functionFragment: "remainRegisterable",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "renew",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
@@ -151,6 +159,10 @@ export interface RegistrarControllerInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "setPriceOracle",
     values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setRemainRegisterable",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
@@ -198,6 +210,10 @@ export interface RegistrarControllerInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "prices", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "register", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "remainRegisterable",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "renew", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
@@ -218,6 +234,10 @@ export interface RegistrarControllerInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "setPriceOracle",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setRemainRegisterable",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -359,6 +379,8 @@ export interface RegistrarController extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    remainRegisterable(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     renew(
       name: PromiseOrValue<string>,
       duration: PromiseOrValue<BigNumberish>,
@@ -393,6 +415,11 @@ export interface RegistrarController extends BaseContract {
 
     setPriceOracle(
       _prices: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setRemainRegisterable(
+      count: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -456,6 +483,8 @@ export interface RegistrarController extends BaseContract {
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  remainRegisterable(overrides?: CallOverrides): Promise<BigNumber>;
+
   renew(
     name: PromiseOrValue<string>,
     duration: PromiseOrValue<BigNumberish>,
@@ -486,6 +515,11 @@ export interface RegistrarController extends BaseContract {
 
   setPriceOracle(
     _prices: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setRemainRegisterable(
+    count: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -549,6 +583,8 @@ export interface RegistrarController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    remainRegisterable(overrides?: CallOverrides): Promise<BigNumber>;
+
     renew(
       name: PromiseOrValue<string>,
       duration: PromiseOrValue<BigNumberish>,
@@ -577,6 +613,11 @@ export interface RegistrarController extends BaseContract {
 
     setPriceOracle(
       _prices: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setRemainRegisterable(
+      count: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -691,6 +732,8 @@ export interface RegistrarController extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    remainRegisterable(overrides?: CallOverrides): Promise<BigNumber>;
+
     renew(
       name: PromiseOrValue<string>,
       duration: PromiseOrValue<BigNumberish>,
@@ -721,6 +764,11 @@ export interface RegistrarController extends BaseContract {
 
     setPriceOracle(
       _prices: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setRemainRegisterable(
+      count: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -789,6 +837,10 @@ export interface RegistrarController extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    remainRegisterable(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     renew(
       name: PromiseOrValue<string>,
       duration: PromiseOrValue<BigNumberish>,
@@ -819,6 +871,11 @@ export interface RegistrarController extends BaseContract {
 
     setPriceOracle(
       _prices: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setRemainRegisterable(
+      count: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

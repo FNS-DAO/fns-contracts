@@ -12,3 +12,4 @@ export * from "./fns/fns-reverse";
 export * from "./fns/fns-withdraw";
 export * from "./fns/fns-set";
 export * from "./manage/update-price-oracle";
+export * from "./manage/remain-registerable";

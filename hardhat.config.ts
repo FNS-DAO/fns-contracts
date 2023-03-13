@@ -12,6 +12,7 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const config: HardhatUserConfig = {
   defaultNetwork: "hyperspace",
   networks: {
+    hardhat: {},
     hyperspace: {
       url: "https://hyperspace.filfox.info/rpc/v1",
       // url: "https://api.hyperspace.node.glif.io/rpc/v1",
