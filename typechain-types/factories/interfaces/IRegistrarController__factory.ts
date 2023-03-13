@@ -13,6 +13,146 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: "uint256",
+        name: "duration",
+        type: "uint256",
+      },
+    ],
+    name: "DurationTooShort",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "InsufficientValue",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "InvalidExpirationTime",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "InvalidNameLength",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "InvalidRecipient",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "name",
+        type: "string",
+      },
+    ],
+    name: "NameNotAvailable",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "ResolverRequiredWhenDataSupplied",
+    type: "error",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "oldMinLen",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "newMinLen",
+        type: "uint256",
+      },
+    ],
+    name: "MinLengthUpdated",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "string",
+        name: "name",
+        type: "string",
+      },
+      {
+        indexed: true,
+        internalType: "bytes32",
+        name: "label",
+        type: "bytes32",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "baseCost",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "premium",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "expires",
+        type: "uint256",
+      },
+    ],
+    name: "NameRegistered",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "string",
+        name: "name",
+        type: "string",
+      },
+      {
+        indexed: true,
+        internalType: "bytes32",
+        name: "label",
+        type: "bytes32",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "cost",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "expires",
+        type: "uint256",
+      },
+    ],
+    name: "NameRenewed",
+    type: "event",
+  },
+  {
+    inputs: [
+      {
         internalType: "string",
         name: "name",
         type: "string",
@@ -32,6 +172,19 @@ const _abi = [
   {
     inputs: [],
     name: "maxExpirationTime",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "minLengthAvailable",
     outputs: [
       {
         internalType: "uint256",

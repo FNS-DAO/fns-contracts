@@ -4,6 +4,28 @@ pragma solidity >=0.8.17;
 import "./IPriceOracle.sol";
 
 interface IRegistrarController {
+    /********************* events *********************/
+    event NameRegistered(
+        string name,
+        bytes32 indexed label,
+        address indexed owner,
+        uint256 baseCost,
+        uint256 premium,
+        uint256 expires
+    );
+    event NameRenewed(string name, bytes32 indexed label, uint256 cost, uint256 expires);
+    event MinLengthUpdated(uint256 oldMinLen, uint256 newMinLen);
+
+    /********************* errors *********************/
+    error NameNotAvailable(string name);
+    error DurationTooShort(uint256 duration);
+    error ResolverRequiredWhenDataSupplied();
+    error InsufficientValue();
+    error InvalidExpirationTime();
+    error InvalidRecipient();
+    error InvalidNameLength();
+
+    /********************* functions *********************/
     function valid(string memory name) external view returns (bool);
 
     function available(string memory name) external view returns (bool);
@@ -26,4 +48,7 @@ interface IRegistrarController {
     /// @dev Max expiration time for register and renew
     /// @dev 0 means no limit.
     function maxExpirationTime() external view returns (uint256);
+
+    /// @dev Minimum name length can be registered
+    function minLengthAvailable() external view returns (uint256);
 }

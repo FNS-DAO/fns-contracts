@@ -46,6 +46,7 @@ export interface RegistrarControllerInterface extends utils.Interface {
     "available(string)": FunctionFragment;
     "base()": FunctionFragment;
     "maxExpirationTime()": FunctionFragment;
+    "minLengthAvailable()": FunctionFragment;
     "nameExpires(string)": FunctionFragment;
     "owner()": FunctionFragment;
     "prices()": FunctionFragment;
@@ -55,6 +56,7 @@ export interface RegistrarControllerInterface extends utils.Interface {
     "rentPrice(string,uint256)": FunctionFragment;
     "reverseRegistrar()": FunctionFragment;
     "setMaxExpirationTime(uint256)": FunctionFragment;
+    "setMinLengthAvailable(uint256)": FunctionFragment;
     "setPriceOracle(address)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
@@ -69,6 +71,7 @@ export interface RegistrarControllerInterface extends utils.Interface {
       | "available"
       | "base"
       | "maxExpirationTime"
+      | "minLengthAvailable"
       | "nameExpires"
       | "owner"
       | "prices"
@@ -78,6 +81,7 @@ export interface RegistrarControllerInterface extends utils.Interface {
       | "rentPrice"
       | "reverseRegistrar"
       | "setMaxExpirationTime"
+      | "setMinLengthAvailable"
       | "setPriceOracle"
       | "supportsInterface"
       | "transferOwnership"
@@ -97,6 +101,10 @@ export interface RegistrarControllerInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "base", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "maxExpirationTime",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "minLengthAvailable",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -134,6 +142,10 @@ export interface RegistrarControllerInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "setMaxExpirationTime",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setMinLengthAvailable",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
@@ -176,6 +188,10 @@ export interface RegistrarControllerInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "minLengthAvailable",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "nameExpires",
     data: BytesLike
   ): Result;
@@ -194,6 +210,10 @@ export interface RegistrarControllerInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "setMaxExpirationTime",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setMinLengthAvailable",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -216,15 +236,29 @@ export interface RegistrarControllerInterface extends utils.Interface {
   ): Result;
 
   events: {
+    "MinLengthUpdated(uint256,uint256)": EventFragment;
     "NameRegistered(string,bytes32,address,uint256,uint256,uint256)": EventFragment;
     "NameRenewed(string,bytes32,uint256,uint256)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "MinLengthUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NameRegistered"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NameRenewed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
 }
+
+export interface MinLengthUpdatedEventObject {
+  oldMinLen: BigNumber;
+  newMinLen: BigNumber;
+}
+export type MinLengthUpdatedEvent = TypedEvent<
+  [BigNumber, BigNumber],
+  MinLengthUpdatedEventObject
+>;
+
+export type MinLengthUpdatedEventFilter =
+  TypedEventFilter<MinLengthUpdatedEvent>;
 
 export interface NameRegisteredEventObject {
   name: string;
@@ -304,6 +338,8 @@ export interface RegistrarController extends BaseContract {
 
     maxExpirationTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    minLengthAvailable(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     nameExpires(
       name: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -347,6 +383,11 @@ export interface RegistrarController extends BaseContract {
 
     setMaxExpirationTime(
       expTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setMinLengthAvailable(
+      minLen: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -394,6 +435,8 @@ export interface RegistrarController extends BaseContract {
 
   maxExpirationTime(overrides?: CallOverrides): Promise<BigNumber>;
 
+  minLengthAvailable(overrides?: CallOverrides): Promise<BigNumber>;
+
   nameExpires(
     name: PromiseOrValue<string>,
     overrides?: CallOverrides
@@ -433,6 +476,11 @@ export interface RegistrarController extends BaseContract {
 
   setMaxExpirationTime(
     expTime: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setMinLengthAvailable(
+    minLen: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -480,6 +528,8 @@ export interface RegistrarController extends BaseContract {
 
     maxExpirationTime(overrides?: CallOverrides): Promise<BigNumber>;
 
+    minLengthAvailable(overrides?: CallOverrides): Promise<BigNumber>;
+
     nameExpires(
       name: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -520,6 +570,11 @@ export interface RegistrarController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    setMinLengthAvailable(
+      minLen: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     setPriceOracle(
       _prices: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -554,6 +609,15 @@ export interface RegistrarController extends BaseContract {
   };
 
   filters: {
+    "MinLengthUpdated(uint256,uint256)"(
+      oldMinLen?: null,
+      newMinLen?: null
+    ): MinLengthUpdatedEventFilter;
+    MinLengthUpdated(
+      oldMinLen?: null,
+      newMinLen?: null
+    ): MinLengthUpdatedEventFilter;
+
     "NameRegistered(string,bytes32,address,uint256,uint256,uint256)"(
       name?: null,
       label?: PromiseOrValue<BytesLike> | null,
@@ -606,6 +670,8 @@ export interface RegistrarController extends BaseContract {
 
     maxExpirationTime(overrides?: CallOverrides): Promise<BigNumber>;
 
+    minLengthAvailable(overrides?: CallOverrides): Promise<BigNumber>;
+
     nameExpires(
       name: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -645,6 +711,11 @@ export interface RegistrarController extends BaseContract {
 
     setMaxExpirationTime(
       expTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setMinLengthAvailable(
+      minLen: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -695,6 +766,10 @@ export interface RegistrarController extends BaseContract {
 
     maxExpirationTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    minLengthAvailable(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     nameExpires(
       name: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -734,6 +809,11 @@ export interface RegistrarController extends BaseContract {
 
     setMaxExpirationTime(
       expTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setMinLengthAvailable(
+      minLen: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

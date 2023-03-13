@@ -5,10 +5,10 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { isEqualIgnoreCase, labelhash, RootNode, txParams } from "../tasks/common";
 
 const TldName = "reverse";
-const TldLable = labelhash(TldName);
+const TldLabel = labelhash(TldName);
 const TldNode = namehash(TldName);
 const AddrName = `addr.${TldName}`;
-const AddrLable = labelhash("addr");
+const AddrLabel = labelhash("addr");
 const AddrNode = namehash(AddrName);
 
 const df: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
@@ -34,7 +34,7 @@ const df: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
   const tldOwner = await registry.owner(TldNode);
   if (!isEqualIgnoreCase(tldOwner, owner.address)) {
     console.log(`Setting owner of node ${TldName} ...`);
-    const tx = await registry.setSubnodeOwner(RootNode, TldLable, owner.address, overrides);
+    const tx = await registry.setSubnodeOwner(RootNode, TldLabel, owner.address, overrides);
     console.log(`> tx: ${tx.hash}`);
     await tx.wait();
   }
@@ -42,7 +42,7 @@ const df: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
   const addrOwner = await registry.owner(AddrNode);
   if (!isEqualIgnoreCase(addrOwner, reverseRegistrar.address)) {
     console.log(`Setting owner of node ${AddrName} to ReverseRegistrar ...`);
-    const tx = await registry.setSubnodeOwner(TldNode, AddrLable, reverseRegistrar.address, overrides);
+    const tx = await registry.setSubnodeOwner(TldNode, AddrLabel, reverseRegistrar.address, overrides);
     console.log(`> tx: ${tx.hash}`);
     await tx.wait();
   }

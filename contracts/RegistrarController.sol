@@ -12,13 +12,6 @@ import "./libs/Ownable.sol";
 import "./libs/SafeERC20.sol";
 import "./libs/StringUtils.sol";
 
-error NameNotAvailable(string name);
-error DurationTooShort(uint256 duration);
-error ResolverRequiredWhenDataSupplied();
-error InsufficientValue();
-error InvalidExpirationTime();
-error InvalidRecipient();
-
 /**
  * @dev A registrar controller for registering and renewing names at fixed cost.
  */
@@ -35,26 +28,18 @@ contract RegistrarController is IRegistrarController, Ownable, IERC165 {
     IReverseRegistrar public immutable reverseRegistrar;
     IPriceOracle public prices;
     uint256 private _maxExpirationTime;
-
-    event NameRegistered(
-        string name,
-        bytes32 indexed label,
-        address indexed owner,
-        uint256 baseCost,
-        uint256 premium,
-        uint256 expires
-    );
-    event NameRenewed(string name, bytes32 indexed label, uint256 cost, uint256 expires);
+    uint256 private _minLengthAvailable;
 
     constructor(IRegistrar _base, IPriceOracle _prices, IReverseRegistrar _reverseRegistrar) {
         base = _base;
         prices = _prices;
         reverseRegistrar = _reverseRegistrar;
         _maxExpirationTime = 0;
+        _minLengthAvailable = 3;
     }
 
-    function valid(string memory name) public pure override returns (bool) {
-        return name.strlen() >= 3;
+    function valid(string memory name) public view override returns (bool) {
+        return name.strlen() >= _minLengthAvailable;
     }
 
     function available(string memory name) public view override returns (bool) {
@@ -147,7 +132,11 @@ contract RegistrarController is IRegistrarController, Ownable, IERC165 {
         return _maxExpirationTime;
     }
 
-    /* Owner functions */
+    function minLengthAvailable() external view override returns (uint256) {
+        return _minLengthAvailable;
+    }
+
+    /********************* Owner functions *********************/
 
     function setPriceOracle(IPriceOracle _prices) external onlyOwner {
         prices = _prices;
@@ -171,7 +160,15 @@ contract RegistrarController is IRegistrarController, Ownable, IERC165 {
         _maxExpirationTime = expTime;
     }
 
-    /* Internal functions */
+    function setMinLengthAvailable(uint256 minLen) external onlyOwner {
+        if (minLen < 1) {
+            revert InvalidNameLength();
+        }
+        emit MinLengthUpdated(_minLengthAvailable, minLen);
+        _minLengthAvailable = minLen;
+    }
+
+    /********************* Internal functions *********************/
 
     function _setRecords(address resolverAddress, bytes32 label, bytes[] calldata data) internal {
         bytes32 nodehash = keccak256(abi.encodePacked(FIL_NODE, label));

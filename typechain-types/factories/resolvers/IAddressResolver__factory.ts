@@ -78,7 +78,7 @@ const _abi = [
     stateMutability: "view",
     type: "function",
   },
-];
+] as const;
 
 export class IAddressResolver__factory {
   static readonly abi = _abi;

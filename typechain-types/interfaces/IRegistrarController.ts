@@ -13,7 +13,11 @@ import type {
   Signer,
   utils,
 } from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type {
+  FunctionFragment,
+  Result,
+  EventFragment,
+} from "@ethersproject/abi";
 import type { Listener, Provider } from "@ethersproject/providers";
 import type {
   TypedEventFilter,
@@ -39,6 +43,7 @@ export interface IRegistrarControllerInterface extends utils.Interface {
   functions: {
     "available(string)": FunctionFragment;
     "maxExpirationTime()": FunctionFragment;
+    "minLengthAvailable()": FunctionFragment;
     "nameExpires(string)": FunctionFragment;
     "register(string,address,uint256,address,bytes[],bool)": FunctionFragment;
     "renew(string,uint256)": FunctionFragment;
@@ -50,6 +55,7 @@ export interface IRegistrarControllerInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | "available"
       | "maxExpirationTime"
+      | "minLengthAvailable"
       | "nameExpires"
       | "register"
       | "renew"
@@ -63,6 +69,10 @@ export interface IRegistrarControllerInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "maxExpirationTime",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "minLengthAvailable",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -99,6 +109,10 @@ export interface IRegistrarControllerInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "minLengthAvailable",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "nameExpires",
     data: BytesLike
   ): Result;
@@ -107,8 +121,56 @@ export interface IRegistrarControllerInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "rentPrice", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "valid", data: BytesLike): Result;
 
-  events: {};
+  events: {
+    "MinLengthUpdated(uint256,uint256)": EventFragment;
+    "NameRegistered(string,bytes32,address,uint256,uint256,uint256)": EventFragment;
+    "NameRenewed(string,bytes32,uint256,uint256)": EventFragment;
+  };
+
+  getEvent(nameOrSignatureOrTopic: "MinLengthUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "NameRegistered"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "NameRenewed"): EventFragment;
 }
+
+export interface MinLengthUpdatedEventObject {
+  oldMinLen: BigNumber;
+  newMinLen: BigNumber;
+}
+export type MinLengthUpdatedEvent = TypedEvent<
+  [BigNumber, BigNumber],
+  MinLengthUpdatedEventObject
+>;
+
+export type MinLengthUpdatedEventFilter =
+  TypedEventFilter<MinLengthUpdatedEvent>;
+
+export interface NameRegisteredEventObject {
+  name: string;
+  label: string;
+  owner: string;
+  baseCost: BigNumber;
+  premium: BigNumber;
+  expires: BigNumber;
+}
+export type NameRegisteredEvent = TypedEvent<
+  [string, string, string, BigNumber, BigNumber, BigNumber],
+  NameRegisteredEventObject
+>;
+
+export type NameRegisteredEventFilter = TypedEventFilter<NameRegisteredEvent>;
+
+export interface NameRenewedEventObject {
+  name: string;
+  label: string;
+  cost: BigNumber;
+  expires: BigNumber;
+}
+export type NameRenewedEvent = TypedEvent<
+  [string, string, BigNumber, BigNumber],
+  NameRenewedEventObject
+>;
+
+export type NameRenewedEventFilter = TypedEventFilter<NameRenewedEvent>;
 
 export interface IRegistrarController extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -143,6 +205,8 @@ export interface IRegistrarController extends BaseContract {
     ): Promise<[boolean]>;
 
     maxExpirationTime(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    minLengthAvailable(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     nameExpires(
       name: PromiseOrValue<string>,
@@ -184,6 +248,8 @@ export interface IRegistrarController extends BaseContract {
 
   maxExpirationTime(overrides?: CallOverrides): Promise<BigNumber>;
 
+  minLengthAvailable(overrides?: CallOverrides): Promise<BigNumber>;
+
   nameExpires(
     name: PromiseOrValue<string>,
     overrides?: CallOverrides
@@ -224,6 +290,8 @@ export interface IRegistrarController extends BaseContract {
 
     maxExpirationTime(overrides?: CallOverrides): Promise<BigNumber>;
 
+    minLengthAvailable(overrides?: CallOverrides): Promise<BigNumber>;
+
     nameExpires(
       name: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -257,7 +325,46 @@ export interface IRegistrarController extends BaseContract {
     ): Promise<boolean>;
   };
 
-  filters: {};
+  filters: {
+    "MinLengthUpdated(uint256,uint256)"(
+      oldMinLen?: null,
+      newMinLen?: null
+    ): MinLengthUpdatedEventFilter;
+    MinLengthUpdated(
+      oldMinLen?: null,
+      newMinLen?: null
+    ): MinLengthUpdatedEventFilter;
+
+    "NameRegistered(string,bytes32,address,uint256,uint256,uint256)"(
+      name?: null,
+      label?: PromiseOrValue<BytesLike> | null,
+      owner?: PromiseOrValue<string> | null,
+      baseCost?: null,
+      premium?: null,
+      expires?: null
+    ): NameRegisteredEventFilter;
+    NameRegistered(
+      name?: null,
+      label?: PromiseOrValue<BytesLike> | null,
+      owner?: PromiseOrValue<string> | null,
+      baseCost?: null,
+      premium?: null,
+      expires?: null
+    ): NameRegisteredEventFilter;
+
+    "NameRenewed(string,bytes32,uint256,uint256)"(
+      name?: null,
+      label?: PromiseOrValue<BytesLike> | null,
+      cost?: null,
+      expires?: null
+    ): NameRenewedEventFilter;
+    NameRenewed(
+      name?: null,
+      label?: PromiseOrValue<BytesLike> | null,
+      cost?: null,
+      expires?: null
+    ): NameRenewedEventFilter;
+  };
 
   estimateGas: {
     available(
@@ -266,6 +373,8 @@ export interface IRegistrarController extends BaseContract {
     ): Promise<BigNumber>;
 
     maxExpirationTime(overrides?: CallOverrides): Promise<BigNumber>;
+
+    minLengthAvailable(overrides?: CallOverrides): Promise<BigNumber>;
 
     nameExpires(
       name: PromiseOrValue<string>,
@@ -307,6 +416,10 @@ export interface IRegistrarController extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     maxExpirationTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    minLengthAvailable(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     nameExpires(
       name: PromiseOrValue<string>,
