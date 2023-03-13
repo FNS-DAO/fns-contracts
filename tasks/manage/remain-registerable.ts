@@ -1,15 +1,14 @@
 import { task, types } from "hardhat/config";
-import { AddressZero, isEqualIgnoreCase, txParams } from "../common";
-import { IPriceOracle, RegistrarController } from "../../typechain-types";
+import { RegistrarController } from "../../typechain-types";
 import { BigNumber } from "ethers";
 
-task("get-remain-registerable", "Get remain registerable for RegistrarController").setAction(async ({ count }, hre) => {
+task("get-remain-registerable", "Get remain registerable of RegistrarController").setAction(async ({ count }, hre) => {
   const regController: RegistrarController = await hre.ethers.getContract("RegistrarController");
   const remain = await regController.remainRegisterable();
   console.log(`remain: ${remain}`);
 });
 
-task("set-remain-registerable", "Set remain registerable for RegistrarController")
+task("set-remain-registerable", "Set remain registerable of RegistrarController")
   .addParam("count", "the remain count", undefined, types.string)
   .setAction(async ({ count }, hre) => {
     const [operator] = await hre.ethers.getSigners();
