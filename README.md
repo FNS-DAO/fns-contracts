@@ -6,13 +6,13 @@ FilNS contracts
 
 ### Hyperspace Testnet
 
-Multicall: 0x7d130b04797a50fa2a9a80fad01a6a74deaa1f4b
-FNSRegistry: 0x889d4f6667ab1aa0a77bc8befbfc9dca5d6ead3d
-ReverseRegistrar: 0x7b053507c2e0f9be1632c4b17c2e871c1770cb14
-Registrar: 0xf87d4c3c91555fecfe684fa58dd26a817c75892b
-FixedPriceOracle: 0xc6eb63fc822d78cd800588584be31ff271e1d458
-RegistrarController: 0x12aea3f77ae98b33f27f20825b15e4ab8b381684
-PublicResolver: 0xe2c015abb52e22227354f78297f0c2de3807b311
+* Multicall: 0x96d9E41B5Febffd8833c2A0723E269aBe0B2e748
+* FNSRegistry: 0xc68c0ef9aec3f1a54921b354eb848482b91d70fe
+* ReverseRegistrar: 0xF21FA45eaadABe38F0526CDc178e36093b89D3b1
+* Registrar: 0x90E76AE5533E8d588B833A0A96A0308760a63863
+* FixedPriceOracle: 0x3891df69Fac2E7104398D41DeC99dFB1962928AF
+* RegistrarController: 0xcf38A805f2F5f0b9E96cE6Cfb1059D5CDEDa5cf0
+* PublicResolver: 0xb28f7372f27dC2Ef104F2a3347FdcAaA86D2d3Cc
 
 ## Build
 
