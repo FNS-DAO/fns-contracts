@@ -4,7 +4,7 @@ import { TLD_FIL_NAME, txParams } from "../common";
 import { IRegistrarController, PublicResolver } from "../../typechain-types";
 
 task("fns-register", "Register .fil fns names")
-  .addParam("duration", "Specify duratioin in sec, default 365 days", 31536000, types.int)
+  .addParam("duration", "Specify duration in sec, default 365 days", 31536000, types.int)
   .addOptionalParam("owner", "Specify owner address")
   .addVariadicPositionalParam("names", "FNS names to register", undefined, types.string, false)
   .setAction(async ({ owner, duration, names }, hre) => {

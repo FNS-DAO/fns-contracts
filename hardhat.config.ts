@@ -14,8 +14,8 @@ const config: HardhatUserConfig = {
   networks: {
     hardhat: {},
     hyperspace: {
-      url: "https://hyperspace.filfox.info/rpc/v1",
-      // url: "https://api.hyperspace.node.glif.io/rpc/v1",
+      // url: "https://hyperspace.filfox.info/rpc/v1",
+      url: "https://api.hyperspace.node.glif.io/rpc/v1",
       accounts: [PRIVATE_KEY!],
     },
   },

@@ -11,6 +11,7 @@ export * from "./fns/fns-resolver";
 export * from "./fns/fns-reverse";
 export * from "./fns/fns-withdraw";
 export * from "./fns/fns-set";
+export * from "./manage/admin-register";
 export * from "./manage/max-expiration";
 export * from "./manage/min-length";
 export * from "./manage/remain-registerable";

@@ -37,7 +37,7 @@ contract RegistrarController is IRegistrarController, Ownable, IERC165 {
         reverseRegistrar = _reverseRegistrar;
         _maxExpirationTime = 0;
         _minLengthAvailable = 3;
-        _remainRegisterable = type(uint256).max;
+        _remainRegisterable = 0;
     }
 
     function valid(string memory name) public view override returns (bool) {

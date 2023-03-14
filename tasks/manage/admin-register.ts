@@ -1,0 +1,60 @@
+import { ensNormalize } from "@ethersproject/hash";
+import { task, types } from "hardhat/config";
+import * as fs from "fs";
+import * as dayjs from "dayjs";
+import { AddressZero, getRegistrar, getResolver, labelhash, txParams } from "../common";
+import { isAddress } from "@ethersproject/address";
+
+type NameItem = {
+  name: string;
+  owner: string;
+  duration: number;
+};
+
+const MIN_DURATION = 3600 * 24 * 1;
+const MAX_DURATION = 3600 * 24 * 365 * 100;
+
+task("admin-register", "Register .fil names by admin")
+  .addParam(
+    "file",
+    "Data file contains all names to register, should be a json file like admin-register-data-sample.json",
+    undefined,
+    types.string,
+  )
+  .setAction(async ({ file }, hre) => {
+    const [operator] = await hre.ethers.getSigners();
+    const items: NameItem[] = JSON.parse(fs.readFileSync(file, "utf8"));
+    const registrar = (await getRegistrar(hre)).connect(operator);
+    if (!registrar.controllers(operator.address)) {
+      throw `Permission denied for ${operator.address}`;
+    }
+    const now = new Date().getTime();
+    for (let item of items) {
+      const name = ensNormalize(item.name);
+      const expiresAt = new Date(now + item.duration * 1000);
+      console.log(`Register ${name}.fil for ${item.owner}, expiresAt ${expiresAt}`);
+      if (name.indexOf(".") >= 0 || name.length < 3) {
+        console.error(`Invalid name: ${name}`);
+        continue;
+      }
+      if (item.duration < MIN_DURATION || item.duration > MAX_DURATION) {
+        console.error(`Invalid duration: ${item.duration}`);
+        continue;
+      }
+      if (!isAddress(item.owner)) {
+        console.error(`Invalid owner: ${item.owner}`);
+        continue;
+      }
+      const id = labelhash(name);
+      if (!(await registrar.available(id))) {
+        console.error(`Name is not available: ${name}`);
+        continue;
+      }
+      const overrides = txParams(await operator.provider.getFeeData());
+      const tx = await registrar.register(name, item.owner, item.duration, AddressZero, {
+        ...overrides,
+      });
+      console.log(`> tx: ${tx.hash}`);
+      await tx.wait();
+    }
+  });
