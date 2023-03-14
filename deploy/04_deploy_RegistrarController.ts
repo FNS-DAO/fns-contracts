@@ -8,7 +8,8 @@ const df: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
   const [deployer] = await ethers.getSigners();
   const owner = deployer;
   const provider = deployer.provider!;
-  const overrides = txParams(await provider.getFeeData());
+  const nonce = await owner.getTransactionCount();
+  const overrides = txParams(await provider.getFeeData(), nonce);
 
   const registrar = await ethers.getContract("Registrar", owner);
   const priceOracle = await ethers.getContract("FixedPriceOracle");
@@ -20,14 +21,17 @@ const df: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
     ...overrides,
     log: true,
   });
-  // if (!deployed.newlyDeployed) {
-  //   return;
-  // }
+  if (deployed.newlyDeployed) {
+    overrides.nonce!++;
+  } else {
+    // return;
+  }
   const controller = await ethers.getContract("RegistrarController");
 
   if (!(await registrar.controllers(controller.address))) {
     console.log(`Adding RegistrarController as controller of Registrar ...`);
     const tx = await registrar.addController(controller.address, overrides);
+    overrides.nonce!++;
     console.log(`tx: ${tx.hash}`);
     await tx.wait();
   }
@@ -35,6 +39,7 @@ const df: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
   if (!(await reverseRegistrar.controllers(controller.address))) {
     console.log(`Adding RegistrarController as controller of ReverseRegister ...`);
     const tx = await reverseRegistrar.setController(controller.address, true, overrides);
+    overrides.nonce!++;
     console.log(`> tx: ${tx.hash}`);
     await tx.wait();
   }

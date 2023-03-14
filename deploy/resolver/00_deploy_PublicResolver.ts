@@ -12,7 +12,8 @@ const df: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
   const [deployer] = await ethers.getSigners();
   const owner = deployer;
   const provider = deployer.provider!;
-  const overrides = txParams(await provider.getFeeData());
+  const nonce = await owner.getTransactionCount();
+  const overrides = txParams(await provider.getFeeData(), nonce);
 
   const registry = await ethers.getContract("FNSRegistry", owner);
   const controller = await ethers.getContract("RegistrarController", owner);
@@ -24,14 +25,17 @@ const df: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
     ...overrides,
     log: true,
   });
-  // if (!deployed.newlyDeployed) {
-  //   return;
-  // }
+  if (deployed.newlyDeployed) {
+    overrides.nonce!++;
+  } else {
+    // return;
+  }
   const resolver = await ethers.getContract("PublicResolver", owner);
 
   if ((await reverseRegistrar.defaultResolver()) == AddressZero) {
     console.log(`Setting default resolver on ReverseRegistrar to PublicResolver ...`);
     const tx = await reverseRegistrar.setDefaultResolver(resolver.address, overrides);
+    overrides.nonce!++;
     console.log(`> tx: ${tx.hash})`);
     await tx.wait();
   }
@@ -40,6 +44,7 @@ const df: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
   if ((await registry.resolver(await registrar.baseNode())) == ethers.constants.AddressZero) {
     console.log(`Setting resolver for Registrar to PublicResolver`);
     const tx = await registrar.setResolver(resolver.address, overrides);
+    overrides.nonce!++;
     console.log(`> tx: ${tx.hash}`);
     await tx.wait();
   }
@@ -49,6 +54,7 @@ const df: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
       console.log(await registry.resolver(PubResolverNode), resolver.address);
       console.log(`Setting resolver for ${PubResolverName} to PublicResolver ...`);
       const tx1 = await registry.setResolver(PubResolverNode, resolver.address, overrides);
+      overrides.nonce!++;
       console.log(`> tx: ${tx1.hash}`);
       await tx1.wait();
     }
@@ -56,6 +62,7 @@ const df: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
     if (!isEqualIgnoreCase(await resolver["addr(bytes32)"](PubResolverNode), resolver.address)) {
       console.log(`Setting address for ${PubResolverName} to PublicResolver ...`);
       const tx2 = await resolver["setAddr(bytes32,address)"](PubResolverNode, resolver.address, overrides);
+      overrides.nonce!++;
       console.log(`> tx: ${tx2.hash}`);
       await tx2.wait();
     }

@@ -16,7 +16,8 @@ const df: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
   const [deployer] = await ethers.getSigners();
   const owner = deployer;
   const provider = deployer.provider!;
-  const overrides = txParams(await provider.getFeeData());
+  const nonce = await owner.getTransactionCount();
+  const overrides = txParams(await provider.getFeeData(), nonce);
 
   const registry = await ethers.getContract("FNSRegistry", owner);
 
@@ -26,14 +27,17 @@ const df: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
     ...overrides,
     log: true,
   });
-  // if (!deployed.newlyDeployed) {
-  //   return;
-  // }
+  if (deployed.newlyDeployed) {
+    overrides.nonce!++;
+  } else {
+    // return;
+  }
   const registrar: Registrar = await ethers.getContract("Registrar", owner);
 
   if (!(await registrar.controllers(owner.address))) {
     console.log(`Adding owner as controller of Registrar ...`);
     const tx = await registrar.addController(owner.address, overrides);
+    overrides.nonce!++;
     console.log(`> tx: ${tx.hash}`);
     await tx.wait();
   }
@@ -41,6 +45,7 @@ const df: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
   const tldOwner = await registry.owner(TldNode);
   if (!isEqualIgnoreCase(tldOwner, registrar.address)) {
     const txNodeOwner = await registry.setSubnodeOwner(RootNode, TldLabel, registrar.address, overrides);
+    overrides.nonce!++;
     console.log(`Setting owner of ${TldName} node to registrar (tx: ${txNodeOwner.hash})...`);
     await txNodeOwner.wait();
   }
@@ -52,6 +57,7 @@ const df: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
     }
     console.log(`Register reserve name: ${name} ...`);
     const tx = await registrar.register(name, owner.address, ReserveDuration, AddressZero, overrides);
+    overrides.nonce!++;
     console.log(`> tx: ${tx.hash}`);
   }
 };

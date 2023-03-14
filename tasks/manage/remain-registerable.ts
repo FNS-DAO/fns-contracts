@@ -1,6 +1,7 @@
 import { task, types } from "hardhat/config";
 import { RegistrarController } from "../../typechain-types";
 import { BigNumber } from "ethers";
+import { txParams } from "../common";
 
 task("get-remain-registerable", "Get remain registerable of RegistrarController").setAction(async ({ count }, hre) => {
   const regController: RegistrarController = await hre.ethers.getContract("RegistrarController");
@@ -19,7 +20,8 @@ task("set-remain-registerable", "Set remain registerable of RegistrarController"
       count = BigNumber.from("0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
     }
     console.log(`setRemainRegsiterable: ${oldRemainCount} -> ${count}`);
-    const tx = await regController.setRemainRegisterable(count);
+    const overrides = txParams(await operator.provider!.getFeeData(), await operator.getTransactionCount());
+    const tx = await regController.setRemainRegisterable(count, overrides);
     console.log(`> tx: ${tx.hash}`);
     await tx.wait();
   });

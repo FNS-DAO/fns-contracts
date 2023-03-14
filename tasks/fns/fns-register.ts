@@ -10,6 +10,7 @@ task("fns-register", "Register .fil fns names")
   .setAction(async ({ owner, duration, names }, hre) => {
     const [operator] = await hre.ethers.getSigners();
     owner = owner || operator.address;
+    let nonce = await operator.getTransactionCount();
     for (let name of names) {
       name = ensNormalize(name);
       if (name.length == 0) {
@@ -29,7 +30,7 @@ task("fns-register", "Register .fil fns names")
       let price = await regController.rentPrice(name, duration);
       const totalPrice = price.base.add(price.premium);
 
-      const overrides = txParams(await operator.provider.getFeeData());
+      const overrides = txParams(await operator.provider!.getFeeData(), nonce++);
       const resolver: PublicResolver = await hre.ethers.getContract("PublicResolver", operator);
       console.log(`[${name}]: register ${name}.${TLD_FIL_NAME} for ${duration}s with ${totalPrice} FIL ...`);
       const tx = await regController.register(name, owner, duration, resolver.address, [], true, {

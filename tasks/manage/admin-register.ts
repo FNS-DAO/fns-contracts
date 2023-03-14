@@ -22,12 +22,13 @@ task("admin-register", "Register .fil names by admin")
     types.string,
   )
   .setAction(async ({ file }, hre) => {
-    const [operator] = await hre.ethers.getSigners();
+    const [controller] = await hre.ethers.getSigners();
     const items: NameItem[] = JSON.parse(fs.readFileSync(file, "utf8"));
-    const registrar = (await getRegistrar(hre)).connect(operator);
-    if (!registrar.controllers(operator.address)) {
-      throw `Permission denied for ${operator.address}`;
+    const registrar = (await getRegistrar(hre)).connect(controller);
+    if (!registrar.controllers(controller.address)) {
+      throw `Permission denied for ${controller.address}`;
     }
+    let nonce = await controller.getTransactionCount();
     const now = new Date().getTime();
     for (let item of items) {
       const name = ensNormalize(item.name);
@@ -50,7 +51,7 @@ task("admin-register", "Register .fil names by admin")
         console.error(`Name is not available: ${name}`);
         continue;
       }
-      const overrides = txParams(await operator.provider.getFeeData());
+      const overrides = txParams(await controller.provider!.getFeeData(), nonce++);
       const tx = await registrar.register(name, item.owner, item.duration, AddressZero, {
         ...overrides,
       });

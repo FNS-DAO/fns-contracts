@@ -18,11 +18,13 @@ export const COIN_TYPE_FIL = 461;
 
 // BlockGasLimit / 10 = 1000000000
 export const DefaultGasLimit = 500000000;
-export const txParams = (feeData: FeeData) => {
-  return {
+export const txParams = (feeData: FeeData, nonce?: number) => {
+  const overrides = {
     // gasLimit: DefaultGasLimit,
     maxPriorityFeePerGas: feeData.maxPriorityFeePerGas!,
+    nonce: nonce,
   };
+  return overrides;
 };
 
 export const RootNode = "0x0000000000000000000000000000000000000000000000000000000000000000";
