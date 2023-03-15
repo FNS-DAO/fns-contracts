@@ -3,7 +3,7 @@ import { task } from "hardhat/config";
 import { txParams, AddressZero } from "../common";
 import { RegistrarController } from "../../typechain-types";
 
-task("fns-withdraw", "Withdraw fund from RegistrarController")
+task("withdraw", "Withdraw fund from RegistrarController")
   .addOptionalParam("to", "The recipient address, default is the operator")
   .addOptionalParam("controller", "Withdraw from a specific RegistrarController")
   .setAction(async ({ controller, to }, hre) => {
