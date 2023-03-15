@@ -1,5 +1,6 @@
 import { task, types } from "hardhat/config";
 import { RegistrarController } from "../../typechain-types";
+import { txParams } from "../common";
 
 task("get-min-length", "Get min length available of RegistrarController").setAction(async ({ count }, hre) => {
   const regController: RegistrarController = await hre.ethers.getContract("RegistrarController");
@@ -14,7 +15,8 @@ task("set-min-length", "Set min length available of RegistrarController")
     const regController: RegistrarController = await hre.ethers.getContract("RegistrarController", operator);
     const oldMinLen = await regController.minLengthAvailable();
     console.log(`setMinLengthAvailable: ${oldMinLen} -> ${len}`);
-    const tx = await regController.setMinLengthAvailable(len);
+    const overrides = txParams(await operator.provider!.getFeeData(), await operator.getTransactionCount());
+    const tx = await regController.setMinLengthAvailable(len, overrides);
     console.log(`> tx: ${tx.hash}`);
     await tx.wait();
   });

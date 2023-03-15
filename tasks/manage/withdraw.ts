@@ -15,7 +15,7 @@ task("withdraw", "Withdraw fund from RegistrarController")
     to = to || operator.address;
     console.log(`Withdraw all FIL from ${registrarController.address} to ${to}`);
 
-    const overrides = txParams(await operator.provider!.getFeeData());
+    const overrides = txParams(await operator.provider!.getFeeData(), await operator.getTransactionCount());
     const balance = await operator.provider!.getBalance(registrarController.address);
 
     if (balance.isZero()) {
