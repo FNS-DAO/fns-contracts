@@ -28,6 +28,7 @@ task("admin-register", "Register .fil names by admin")
     if (!registrar.controllers(controller.address)) {
       throw `Permission denied for ${controller.address}`;
     }
+    const resolver = await getResolver(hre);
     let nonce = await controller.getTransactionCount();
     const now = new Date().getTime();
     for (let item of items) {
@@ -52,7 +53,7 @@ task("admin-register", "Register .fil names by admin")
         continue;
       }
       const overrides = txParams(await controller.provider!.getFeeData(), nonce++);
-      const tx = await registrar.register(name, item.owner, item.duration, AddressZero, {
+      const tx = await registrar.register(name, item.owner, item.duration, resolver.address, {
         ...overrides,
       });
       console.log(`> tx: ${tx.hash}`);
