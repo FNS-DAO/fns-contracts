@@ -54,7 +54,6 @@ export function get2LD(fullname: string): string {
 }
 
 // get name of 2LD(Second Level Domain) from full fns name
-// todo: consider subdomains: 3LD, 4LD, 5LD, ...
 export function get2LDName(fullname: string): string {
   fullname = ensNormalize(fullname);
   let components = fullname.split(".");
