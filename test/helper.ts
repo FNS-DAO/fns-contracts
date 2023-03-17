@@ -43,5 +43,6 @@ export async function deployRegistrarController(
 
 export const DAY = 24 * 60 * 60;
 export const MIN_REG_DURATION = 28 * DAY;
+export const YEAR = 365 * DAY;
 
 export const U256_MAX = BigNumber.from("0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
