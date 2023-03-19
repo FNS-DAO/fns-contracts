@@ -37,6 +37,13 @@ yarn hardhat deploy --tags resolver
 
 ## Show deployed contracts
 
+Hyperspace testnet:
+
 ```
 yarn hardhat fns-contracts
+```
+
+Filecoin mainnet:
+```
+yarn hardhat --network filecoin fns-contracts
 ```

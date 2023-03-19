@@ -18,6 +18,10 @@ const config: HardhatUserConfig = {
       url: "https://api.hyperspace.node.glif.io/rpc/v1",
       accounts: [PRIVATE_KEY!],
     },
+    filecoin: {
+      url: "https://api.node.glif.io",
+      accounts: [PRIVATE_KEY!],
+    },
   },
   paths: {
     sources: "./contracts",
