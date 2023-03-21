@@ -8,7 +8,7 @@ import { AddressZero, isEqualIgnoreCase, labelhash, RootNode, txParams } from ".
 const TldName = "fil";
 const TldLabel = labelhash(TldName);
 const TldNode = namehash(TldName);
-const ReserveNames = ["resolver", "fns", "filfox", "foxwallet"];
+const ReserveNames = ["resolver", "fns"];
 const ReserveDuration = 3600 * 24 * 365 * 1024;
 
 const df: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {

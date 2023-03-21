@@ -18,19 +18,18 @@ contract FixedPriceOracle is IPriceOracle, Ownable {
     uint256 public price5Letter;
 
     constructor() {
-        price1Letter = 8 * 1e13;
-        price2Letter = 8 * 1e12;
-        price3Letter = 8 * 1e11;
-        price4Letter = 12 * 1e10;
-        price5Letter = 2 * 1e10;
+        price1Letter = 158 * 1e14;
+        price2Letter = 158 * 1e12;
+        price3Letter = 158 * 1e9;
+        price4Letter = 317 * 1e8;
+        price5Letter = 634 * 1e7;
     }
 
-    function price(string calldata name, uint256 expires, uint256 duration)
-        external
-        view
-        override
-        returns (IPriceOracle.Price memory)
-    {
+    function price(
+        string calldata name,
+        uint256 expires,
+        uint256 duration
+    ) external view override returns (IPriceOracle.Price memory) {
         uint256 len = name.strlen();
         uint256 basePrice;
 
@@ -46,7 +45,7 @@ contract FixedPriceOracle is IPriceOracle, Ownable {
             basePrice = price1Letter * duration;
         }
 
-        return IPriceOracle.Price({base: basePrice, premium: _premium(name, expires, duration)});
+        return IPriceOracle.Price({ base: basePrice, premium: _premium(name, expires, duration) });
     }
 
     /**
@@ -59,19 +58,21 @@ contract FixedPriceOracle is IPriceOracle, Ownable {
     /**
      * @dev Returns the pricing premium in internal base units.
      */
-    function _premium(string memory, /*name*/ uint256, /*expires*/ uint256 /*duration*/ )
-        internal
-        view
-        virtual
-        returns (uint256)
-    {
+    function _premium(
+        string memory,
+        /*name*/ uint256,
+        /*expires*/ uint256 /*duration*/
+    ) internal view virtual returns (uint256) {
         return 0;
     }
 
-    function setBasePrices(uint256 price1, uint256 price2, uint256 price3, uint256 price4, uint256 price5)
-        external
-        onlyOwner
-    {
+    function setBasePrices(
+        uint256 price1,
+        uint256 price2,
+        uint256 price3,
+        uint256 price4,
+        uint256 price5
+    ) external onlyOwner {
         require(price1 != 0, "0 price");
         require(price1 > price2 && price2 > price3 && price3 > price4 && price4 > price5, "invalid price");
         price1Letter = price1;

@@ -17,10 +17,12 @@ const config: HardhatUserConfig = {
       // url: "https://hyperspace.filfox.info/rpc/v1",
       url: "https://api.hyperspace.node.glif.io/rpc/v1",
       accounts: [PRIVATE_KEY!],
+      timeout: 100_000,
     },
     filecoin: {
       url: "https://api.node.glif.io",
       accounts: [PRIVATE_KEY!],
+      timeout: 100_000,
     },
   },
   paths: {

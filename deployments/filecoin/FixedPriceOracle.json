@@ -1,0 +1,384 @@
+{
+  "address": "0xD74A826d67A5E1AC84eB026eeb844053b8fB0b92",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "expires",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "duration",
+          "type": "uint256"
+        }
+      ],
+      "name": "premium",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "expires",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "duration",
+          "type": "uint256"
+        }
+      ],
+      "name": "price",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "base",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "premium",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct IPriceOracle.Price",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "price1Letter",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "price2Letter",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "price3Letter",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "price4Letter",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "price5Letter",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "price1",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "price2",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "price3",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "price4",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "price5",
+          "type": "uint256"
+        }
+      ],
+      "name": "setBasePrices",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes4",
+          "name": "interfaceID",
+          "type": "bytes4"
+        }
+      ],
+      "name": "supportsInterface",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x4fc7ff2016936ffe23b8ea216c26684f573fd0a2a706b6bd05be0280283c5289",
+  "receipt": {
+    "to": null,
+    "from": "0x7eE600dAf1Fc49d6708Fc35477e6EBC868F0B534",
+    "contractAddress": "0xD74A826d67A5E1AC84eB026eeb844053b8fB0b92",
+    "transactionIndex": 89,
+    "gasUsed": "68181813",
+    "logsBloom": "0x94b93e49e50fcec8e2a8ab0eb8b573ffe25bda7ffa8bb4f7e5e4fa574eff2fafd973cc2770d47b464a566c7ecf1237f491bad46a5de29753e90572d298f79f5d7118863ecb9409246f65de3bcfb20be5776dedc5514bb3da99094ac3dd866ba6376305e98ed1d07a327e75d6f1fcc9a8a1cb7d2aa7cb4e44f376b577dd1ad2ddf2e99e1cd077fcea5e1f5b9bd5cf401ee2483c39ecaae9bddcb0ee58cd37961ade719e3089e02237fd23d9bbdef5e3f59f8cbeb5f734be4a3af1af36be730dbb37820bff0389fd43e6eb557f8127fbcd0871ed1ef4fbbd557ca53ae7cf5bab3cfefccd75f25c5d8b0e217eafae2c877a535bbeb84333db5c872f4496fd796f33",
+    "blockHash": "0xe4899d6a306127f81035b074d732a9797cbb246ff598738240b22b06b863bde9",
+    "transactionHash": "0x4fc7ff2016936ffe23b8ea216c26684f573fd0a2a706b6bd05be0280283c5289",
+    "logs": [
+      {
+        "transactionIndex": 89,
+        "blockNumber": 2702820,
+        "transactionHash": "0x4fc7ff2016936ffe23b8ea216c26684f573fd0a2a706b6bd05be0280283c5289",
+        "address": "0xD74A826d67A5E1AC84eB026eeb844053b8fB0b92",
+        "topics": [
+          "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000007ee600daf1fc49d6708fc35477e6ebc868f0b534"
+        ],
+        "data": "0x",
+        "logIndex": 0,
+        "blockHash": "0xe4899d6a306127f81035b074d732a9797cbb246ff598738240b22b06b863bde9"
+      }
+    ],
+    "blockNumber": 2702820,
+    "cumulativeGasUsed": "0",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "dd5a67b75f08ec034ef1823be6763f13",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"expires\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"duration\",\"type\":\"uint256\"}],\"name\":\"premium\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"expires\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"duration\",\"type\":\"uint256\"}],\"name\":\"price\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"base\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"premium\",\"type\":\"uint256\"}],\"internalType\":\"struct IPriceOracle.Price\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"price1Letter\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"price2Letter\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"price3Letter\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"price4Letter\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"price5Letter\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"price1\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"price2\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"price3\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"price4\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"price5\",\"type\":\"uint256\"}],\"name\":\"setBasePrices\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"interfaceID\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"owner()\":{\"details\":\"Returns the address of the current owner.\"},\"premium(string,uint256,uint256)\":{\"details\":\"Returns the pricing premium in wei.\"},\"price(string,uint256,uint256)\":{\"details\":\"Returns the price to register or renew a name.\",\"params\":{\"duration\":\"How long the name is being registered or extended for, in seconds.\",\"expires\":\"When the name presently expires (0 if this is a new registration).\",\"name\":\"The name being registered or renewed.\"},\"returns\":{\"_0\":\"base premium tuple of base price + premium price\"}},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner.\"},\"transferOwnership(address)\":{\"details\":\"Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/FixedPriceOracle.sol\":\"FixedPriceOracle\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/FixedPriceOracle.sol\":{\"content\":\"//SPDX-License-Identifier: MIT\\npragma solidity >=0.8.17;\\n\\nimport \\\"./interfaces/IPriceOracle.sol\\\";\\nimport \\\"./libs/StringUtils.sol\\\";\\nimport \\\"./libs/Ownable.sol\\\";\\nimport \\\"./libs/IERC165.sol\\\";\\n\\n// FixedPriceOracle sets a price in FIL\\ncontract FixedPriceOracle is IPriceOracle, Ownable {\\n    using StringUtils for *;\\n\\n    // Rent in base price units by length\\n    uint256 public price1Letter;\\n    uint256 public price2Letter;\\n    uint256 public price3Letter;\\n    uint256 public price4Letter;\\n    uint256 public price5Letter;\\n\\n    constructor() {\\n        price1Letter = 158 * 1e14;\\n        price2Letter = 158 * 1e12;\\n        price3Letter = 158 * 1e9;\\n        price4Letter = 317 * 1e8;\\n        price5Letter = 634 * 1e7;\\n    }\\n\\n    function price(\\n        string calldata name,\\n        uint256 expires,\\n        uint256 duration\\n    ) external view override returns (IPriceOracle.Price memory) {\\n        uint256 len = name.strlen();\\n        uint256 basePrice;\\n\\n        if (len >= 5) {\\n            basePrice = price5Letter * duration;\\n        } else if (len == 4) {\\n            basePrice = price4Letter * duration;\\n        } else if (len == 3) {\\n            basePrice = price3Letter * duration;\\n        } else if (len == 2) {\\n            basePrice = price2Letter * duration;\\n        } else {\\n            basePrice = price1Letter * duration;\\n        }\\n\\n        return IPriceOracle.Price({ base: basePrice, premium: _premium(name, expires, duration) });\\n    }\\n\\n    /**\\n     * @dev Returns the pricing premium in wei.\\n     */\\n    function premium(string calldata name, uint256 expires, uint256 duration) external view returns (uint256) {\\n        return _premium(name, expires, duration);\\n    }\\n\\n    /**\\n     * @dev Returns the pricing premium in internal base units.\\n     */\\n    function _premium(\\n        string memory,\\n        /*name*/ uint256,\\n        /*expires*/ uint256 /*duration*/\\n    ) internal view virtual returns (uint256) {\\n        return 0;\\n    }\\n\\n    function setBasePrices(\\n        uint256 price1,\\n        uint256 price2,\\n        uint256 price3,\\n        uint256 price4,\\n        uint256 price5\\n    ) external onlyOwner {\\n        require(price1 != 0, \\\"0 price\\\");\\n        require(price1 > price2 && price2 > price3 && price3 > price4 && price4 > price5, \\\"invalid price\\\");\\n        price1Letter = price1;\\n        price2Letter = price2;\\n        price3Letter = price3;\\n        price4Letter = price4;\\n        price5Letter = price5;\\n    }\\n\\n    function supportsInterface(bytes4 interfaceID) public view virtual returns (bool) {\\n        return interfaceID == type(IERC165).interfaceId || interfaceID == type(IPriceOracle).interfaceId;\\n    }\\n}\\n\",\"keccak256\":\"0x39b673614310f35c7bbc397c9bb3767a561751c3ea31999d8cc0dea386ca8c87\",\"license\":\"MIT\"},\"contracts/interfaces/IPriceOracle.sol\":{\"content\":\"//SPDX-License-Identifier: MIT\\npragma solidity >=0.8.17;\\n\\ninterface IPriceOracle {\\n    struct Price {\\n        uint256 base;\\n        uint256 premium;\\n    }\\n\\n    /**\\n     * @dev Returns the price to register or renew a name.\\n     * @param name The name being registered or renewed.\\n     * @param expires When the name presently expires (0 if this is a new registration).\\n     * @param duration How long the name is being registered or extended for, in seconds.\\n     * @return base premium tuple of base price + premium price\\n     */\\n    function price(\\n        string calldata name,\\n        uint256 expires,\\n        uint256 duration\\n    ) external view returns (Price calldata);\\n}\\n\",\"keccak256\":\"0xb467ac8727e0b11c3af599082d36c09d0cc9c27479eb0595603425210b92c9b9\",\"license\":\"MIT\"},\"contracts/libs/Context.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts v4.4.1 (utils/Context.sol)\\n\\npragma solidity >=0.8.17;\\n\\n/**\\n * @dev Provides information about the current execution context, including the\\n * sender of the transaction and its data. While these are generally available\\n * via msg.sender and msg.data, they should not be accessed in such a direct\\n * manner, since when dealing with meta-transactions the account sending and\\n * paying for execution may not be the actual sender (as far as an application\\n * is concerned).\\n *\\n * This contract is only required for intermediate, library-like contracts.\\n */\\nabstract contract Context {\\n    function _msgSender() internal view virtual returns (address) {\\n        return msg.sender;\\n    }\\n\\n    function _msgData() internal view virtual returns (bytes calldata) {\\n        return msg.data;\\n    }\\n}\\n\",\"keccak256\":\"0x29d9b1e5f92151c0a0f7f9bdd3feb9752ac02d489e51209b8d9dbf59b4ba6bb5\",\"license\":\"MIT\"},\"contracts/libs/IERC165.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts v4.4.1 (utils/introspection/IERC165.sol)\\n\\npragma solidity >=0.8.17;\\n\\n/**\\n * @dev Interface of the ERC165 standard, as defined in the\\n * https://eips.ethereum.org/EIPS/eip-165[EIP].\\n *\\n * Implementers can declare support of contract interfaces, which can then be\\n * queried by others ({ERC165Checker}).\\n *\\n * For an implementation, see {ERC165}.\\n */\\ninterface IERC165 {\\n    /**\\n     * @dev Returns true if this contract implements the interface defined by\\n     * `interfaceId`. See the corresponding\\n     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]\\n     * to learn more about how these ids are created.\\n     *\\n     * This function call must use less than 30 000 gas.\\n     */\\n    function supportsInterface(bytes4 interfaceId) external view returns (bool);\\n}\\n\",\"keccak256\":\"0x491bff38bb07c6dea3f2f083094fce54377c073cdab1fbcbde78196a5878b1ef\",\"license\":\"MIT\"},\"contracts/libs/Ownable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v4.7.0) (access/Ownable.sol)\\n\\npragma solidity >=0.8.17;\\n\\nimport \\\"./Context.sol\\\";\\n\\n/**\\n * @dev Contract module which provides a basic access control mechanism, where\\n * there is an account (an owner) that can be granted exclusive access to\\n * specific functions.\\n *\\n * By default, the owner account will be the one that deploys the contract. This\\n * can later be changed with {transferOwnership}.\\n *\\n * This module is used through inheritance. It will make available the modifier\\n * `onlyOwner`, which can be applied to your functions to restrict their use to\\n * the owner.\\n */\\nabstract contract Ownable is Context {\\n    address private _owner;\\n\\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\\n\\n    /**\\n     * @dev Initializes the contract setting the deployer as the initial owner.\\n     */\\n    constructor() {\\n        _transferOwnership(_msgSender());\\n    }\\n\\n    /**\\n     * @dev Throws if called by any account other than the owner.\\n     */\\n    modifier onlyOwner() {\\n        _checkOwner();\\n        _;\\n    }\\n\\n    /**\\n     * @dev Returns the address of the current owner.\\n     */\\n    function owner() public view virtual returns (address) {\\n        return _owner;\\n    }\\n\\n    /**\\n     * @dev Throws if the sender is not the owner.\\n     */\\n    function _checkOwner() internal view virtual {\\n        require(owner() == _msgSender(), \\\"Ownable: caller is not the owner\\\");\\n    }\\n\\n    /**\\n     * @dev Leaves the contract without owner. It will not be possible to call\\n     * `onlyOwner` functions anymore. Can only be called by the current owner.\\n     *\\n     * NOTE: Renouncing ownership will leave the contract without an owner,\\n     * thereby removing any functionality that is only available to the owner.\\n     */\\n    function renounceOwnership() public virtual onlyOwner {\\n        _transferOwnership(address(0));\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Can only be called by the current owner.\\n     */\\n    function transferOwnership(address newOwner) public virtual onlyOwner {\\n        require(newOwner != address(0), \\\"Ownable: new owner is the zero address\\\");\\n        _transferOwnership(newOwner);\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Internal function without access restriction.\\n     */\\n    function _transferOwnership(address newOwner) internal virtual {\\n        address oldOwner = _owner;\\n        _owner = newOwner;\\n        emit OwnershipTransferred(oldOwner, newOwner);\\n    }\\n}\\n\",\"keccak256\":\"0x66fba79f55141a7a0801cac3425a641c69472bc8997528ccfff2f002132fd715\",\"license\":\"MIT\"},\"contracts/libs/StringUtils.sol\":{\"content\":\"//SPDX-License-Identifier: MIT\\npragma solidity >=0.8.17;\\n\\nlibrary StringUtils {\\n    /**\\n     * @dev Returns the length of a given string\\n     *\\n     * @param s The string to measure the length of\\n     * @return The length of the input string\\n     */\\n    function strlen(string memory s) internal pure returns (uint256) {\\n        uint256 len;\\n        uint256 i = 0;\\n        uint256 bytelength = bytes(s).length;\\n        for (len = 0; i < bytelength; len++) {\\n            bytes1 b = bytes(s)[i];\\n            if (b < 0x80) {\\n                i += 1;\\n            } else if (b < 0xE0) {\\n                i += 2;\\n            } else if (b < 0xF0) {\\n                i += 3;\\n            } else if (b < 0xF8) {\\n                i += 4;\\n            } else if (b < 0xFC) {\\n                i += 5;\\n            } else {\\n                i += 6;\\n            }\\n        }\\n        return len;\\n    }\\n}\\n\",\"keccak256\":\"0xc217f45bc2a13d6381d42e2c3c555aa037f241a38e37562d26dfcc3e3533ea84\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5061001a3361004f565b663822042b738000600155658fb33ddfe0006002556424c988ac00600355640761779d00600455640179e4b90060055561009f565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b610811806100ae6000396000f3fe608060405234801561001057600080fd5b50600436106100b45760003560e01c80638da5cb5b116100715780638da5cb5b1461014c578063a200e15314610167578063a34e359614610170578063cd5d2c7414610183578063d820ed421461018c578063f2fde38b1461019557600080fd5b806301ffc9a7146100b957806316015d4b146100e15780632c0fd74c146100f657806350e9a7151461010d57806359b6b86c1461013b578063715018a614610144575b600080fd5b6100cc6100c7366004610658565b6101a8565b60405190151581526020015b60405180910390f35b6100f46100ef366004610689565b6101df565b005b6100ff60015481565b6040519081526020016100d8565b61012061011b3660046106c4565b61029d565b604080518251815260209283015192810192909252016100d8565b6100ff60055481565b6100f46103c7565b6000546040516001600160a01b0390911681526020016100d8565b6100ff60035481565b6100ff61017e3660046106c4565b6103db565b6100ff60025481565b6100ff60045481565b6100f46101a3366004610743565b610429565b60006001600160e01b031982166301ffc9a760e01b14806101d957506001600160e01b031982166350e9a71560e01b145b92915050565b6101e76104a2565b846000036102265760405162461bcd60e51b81526020600482015260076024820152663020707269636560c81b60448201526064015b60405180910390fd5b838511801561023457508284115b801561023f57508183115b801561024a57508082115b6102865760405162461bcd60e51b815260206004820152600d60248201526c696e76616c696420707269636560981b604482015260640161021d565b600194909455600292909255600355600455600555565b604080518082019091526000808252602082015260006102f286868080601f0160208091040260200160405190810160405280939291908181526020018383808284376000920191909152506104fc92505050565b9050600060058210610313578360055461030c9190610782565b9050610366565b81600403610329578360045461030c9190610782565b8160030361033f578360035461030c9190610782565b81600203610355578360025461030c9190610782565b836001546103639190610782565b90505b60405180604001604052808281526020016103ba89898080601f0160208091040260200160405190810160405280939291908181526020018383808284376000920191909152508b92508a91506105ff9050565b9052979650505050505050565b6103cf6104a2565b6103d96000610608565b565b600061042085858080601f0160208091040260200160405190810160405280939291908181526020018383808284376000920191909152508792508691506105ff9050565b95945050505050565b6104316104a2565b6001600160a01b0381166104965760405162461bcd60e51b815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201526564647265737360d01b606482015260840161021d565b61049f81610608565b50565b6000546001600160a01b031633146103d95760405162461bcd60e51b815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572604482015260640161021d565b8051600090819081905b808210156105f657600085838151811061052257610522610799565b01602001516001600160f81b0319169050600160ff1b8110156105515761054a6001846107af565b92506105e3565b600760fd1b6001600160f81b0319821610156105725761054a6002846107af565b600f60fc1b6001600160f81b0319821610156105935761054a6003846107af565b601f60fb1b6001600160f81b0319821610156105b45761054a6004846107af565b603f60fa1b6001600160f81b0319821610156105d55761054a6005846107af565b6105e06006846107af565b92505b50826105ee816107c2565b935050610506565b50909392505050565b60009392505050565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b60006020828403121561066a57600080fd5b81356001600160e01b03198116811461068257600080fd5b9392505050565b600080600080600060a086880312156106a157600080fd5b505083359560208501359550604085013594606081013594506080013592509050565b600080600080606085870312156106da57600080fd5b843567ffffffffffffffff808211156106f257600080fd5b818701915087601f83011261070657600080fd5b81358181111561071557600080fd5b88602082850101111561072757600080fd5b6020928301999098509187013596604001359550909350505050565b60006020828403121561075557600080fd5b81356001600160a01b038116811461068257600080fd5b634e487b7160e01b600052601160045260246000fd5b80820281158282048414176101d9576101d961076c565b634e487b7160e01b600052603260045260246000fd5b808201808211156101d9576101d961076c565b6000600182016107d4576107d461076c565b506001019056fea26469706673582212209f7484e1c701979d70b871fafa9e32b1ed80b12ae60ee7fd53fa6069fc95b20564736f6c63430008110033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100b45760003560e01c80638da5cb5b116100715780638da5cb5b1461014c578063a200e15314610167578063a34e359614610170578063cd5d2c7414610183578063d820ed421461018c578063f2fde38b1461019557600080fd5b806301ffc9a7146100b957806316015d4b146100e15780632c0fd74c146100f657806350e9a7151461010d57806359b6b86c1461013b578063715018a614610144575b600080fd5b6100cc6100c7366004610658565b6101a8565b60405190151581526020015b60405180910390f35b6100f46100ef366004610689565b6101df565b005b6100ff60015481565b6040519081526020016100d8565b61012061011b3660046106c4565b61029d565b604080518251815260209283015192810192909252016100d8565b6100ff60055481565b6100f46103c7565b6000546040516001600160a01b0390911681526020016100d8565b6100ff60035481565b6100ff61017e3660046106c4565b6103db565b6100ff60025481565b6100ff60045481565b6100f46101a3366004610743565b610429565b60006001600160e01b031982166301ffc9a760e01b14806101d957506001600160e01b031982166350e9a71560e01b145b92915050565b6101e76104a2565b846000036102265760405162461bcd60e51b81526020600482015260076024820152663020707269636560c81b60448201526064015b60405180910390fd5b838511801561023457508284115b801561023f57508183115b801561024a57508082115b6102865760405162461bcd60e51b815260206004820152600d60248201526c696e76616c696420707269636560981b604482015260640161021d565b600194909455600292909255600355600455600555565b604080518082019091526000808252602082015260006102f286868080601f0160208091040260200160405190810160405280939291908181526020018383808284376000920191909152506104fc92505050565b9050600060058210610313578360055461030c9190610782565b9050610366565b81600403610329578360045461030c9190610782565b8160030361033f578360035461030c9190610782565b81600203610355578360025461030c9190610782565b836001546103639190610782565b90505b60405180604001604052808281526020016103ba89898080601f0160208091040260200160405190810160405280939291908181526020018383808284376000920191909152508b92508a91506105ff9050565b9052979650505050505050565b6103cf6104a2565b6103d96000610608565b565b600061042085858080601f0160208091040260200160405190810160405280939291908181526020018383808284376000920191909152508792508691506105ff9050565b95945050505050565b6104316104a2565b6001600160a01b0381166104965760405162461bcd60e51b815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201526564647265737360d01b606482015260840161021d565b61049f81610608565b50565b6000546001600160a01b031633146103d95760405162461bcd60e51b815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572604482015260640161021d565b8051600090819081905b808210156105f657600085838151811061052257610522610799565b01602001516001600160f81b0319169050600160ff1b8110156105515761054a6001846107af565b92506105e3565b600760fd1b6001600160f81b0319821610156105725761054a6002846107af565b600f60fc1b6001600160f81b0319821610156105935761054a6003846107af565b601f60fb1b6001600160f81b0319821610156105b45761054a6004846107af565b603f60fa1b6001600160f81b0319821610156105d55761054a6005846107af565b6105e06006846107af565b92505b50826105ee816107c2565b935050610506565b50909392505050565b60009392505050565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b60006020828403121561066a57600080fd5b81356001600160e01b03198116811461068257600080fd5b9392505050565b600080600080600060a086880312156106a157600080fd5b505083359560208501359550604085013594606081013594506080013592509050565b600080600080606085870312156106da57600080fd5b843567ffffffffffffffff808211156106f257600080fd5b818701915087601f83011261070657600080fd5b81358181111561071557600080fd5b88602082850101111561072757600080fd5b6020928301999098509187013596604001359550909350505050565b60006020828403121561075557600080fd5b81356001600160a01b038116811461068257600080fd5b634e487b7160e01b600052601160045260246000fd5b80820281158282048414176101d9576101d961076c565b634e487b7160e01b600052603260045260246000fd5b808201808211156101d9576101d961076c565b6000600182016107d4576107d461076c565b506001019056fea26469706673582212209f7484e1c701979d70b871fafa9e32b1ed80b12ae60ee7fd53fa6069fc95b20564736f6c63430008110033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "owner()": {
+        "details": "Returns the address of the current owner."
+      },
+      "premium(string,uint256,uint256)": {
+        "details": "Returns the pricing premium in wei."
+      },
+      "price(string,uint256,uint256)": {
+        "details": "Returns the price to register or renew a name.",
+        "params": {
+          "duration": "How long the name is being registered or extended for, in seconds.",
+          "expires": "When the name presently expires (0 if this is a new registration).",
+          "name": "The name being registered or renewed."
+        },
+        "returns": {
+          "_0": "base premium tuple of base price + premium price"
+        }
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
+      },
+      "transferOwnership(address)": {
+        "details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 321,
+        "contract": "contracts/FixedPriceOracle.sol:FixedPriceOracle",
+        "label": "_owner",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_address"
+      },
+      {
+        "astId": 13,
+        "contract": "contracts/FixedPriceOracle.sol:FixedPriceOracle",
+        "label": "price1Letter",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 15,
+        "contract": "contracts/FixedPriceOracle.sol:FixedPriceOracle",
+        "label": "price2Letter",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 17,
+        "contract": "contracts/FixedPriceOracle.sol:FixedPriceOracle",
+        "label": "price3Letter",
+        "offset": 0,
+        "slot": "3",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 19,
+        "contract": "contracts/FixedPriceOracle.sol:FixedPriceOracle",
+        "label": "price4Letter",
+        "offset": 0,
+        "slot": "4",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 21,
+        "contract": "contracts/FixedPriceOracle.sol:FixedPriceOracle",
+        "label": "price5Letter",
+        "offset": 0,
+        "slot": "5",
+        "type": "t_uint256"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}
