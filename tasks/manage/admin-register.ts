@@ -5,6 +5,10 @@ import * as dayjs from "dayjs";
 import { AddressZero, getRegistrar, getResolver, labelhash, txParams } from "../common";
 import { isAddress } from "@ethersproject/address";
 
+function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 type NameItem = {
   name: string;
   owner: string;
@@ -56,7 +60,8 @@ task("admin-register", "Register .fil names by admin")
       const tx = await registrar.register(name, item.owner, item.duration, resolver.address, {
         ...overrides,
       });
-      console.log(`> tx: ${tx.hash}`);
-      await tx.wait();
+      console.log(`> nonce=${nonce - 1}, tx: ${tx.hash}`);
+      // await tx.wait();
+      await sleep(1000);
     }
   });

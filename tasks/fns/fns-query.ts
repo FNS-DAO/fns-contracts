@@ -2,6 +2,7 @@ import { namehash } from "ethers/lib/utils";
 import { task, types } from "hardhat/config";
 import {
   AddressZero,
+  COIN_TYPE_FIL,
   get2LD,
   get2LDName,
   getFNSRegistry,
@@ -35,7 +36,7 @@ task("fns-query", "Query fns names")
 
       if (resolverAddr != AddressZero) {
         const resolver = PublicResolver__factory.connect(resolverAddr, registry.provider);
-        console.log(`> resolve-addr: ${await resolver["addr(bytes32)"](node)}`);
+        console.log(`> resolve-addr: ${await resolver["addr(bytes32,uint256)"](node, COIN_TYPE_FIL)}`);
         console.log(`> resolve-content: ${await resolver.contenthash(node)}`);
       }
       if (isFilDomain(nn)) {
