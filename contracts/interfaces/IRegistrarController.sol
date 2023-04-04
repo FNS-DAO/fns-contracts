@@ -14,7 +14,12 @@ interface IRegistrarController {
         uint256 expires
     );
     event NameRenewed(string name, bytes32 indexed label, uint256 cost, uint256 expires);
+    event PriceOracleUpdated(IPriceOracle oldPriceOracle, IPriceOracle newPriceOracle);
+    event Withdrawn(address indexed to, uint256 amount);
+    event WithdrawnERC20(address indexed to, address token, uint256 amount);
     event MinLengthUpdated(uint256 oldMinLen, uint256 newMinLen);
+    event MaxExpirationTimeUpdated(uint256 oldExpTime, uint256 newExpTime);
+    event RemainRegisterableUpdated(uint256 oldRemain, uint256 newRemain);
 
     /********************* errors *********************/
     error NameNotAvailable(string name);

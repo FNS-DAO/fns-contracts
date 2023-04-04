@@ -246,7 +246,6 @@ export interface IRegistrarInterface extends utils.Interface {
     "ApprovalForAll(address,address,bool)": EventFragment;
     "ControllerAdded(address)": EventFragment;
     "ControllerRemoved(address)": EventFragment;
-    "NameMigrated(uint256,address,uint256)": EventFragment;
     "NameRegistered(uint256,address,uint256)": EventFragment;
     "NameRenewed(uint256,uint256)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
@@ -256,7 +255,6 @@ export interface IRegistrarInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ControllerAdded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ControllerRemoved"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "NameMigrated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NameRegistered"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NameRenewed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
@@ -306,18 +304,6 @@ export type ControllerRemovedEvent = TypedEvent<
 
 export type ControllerRemovedEventFilter =
   TypedEventFilter<ControllerRemovedEvent>;
-
-export interface NameMigratedEventObject {
-  id: BigNumber;
-  owner: string;
-  expires: BigNumber;
-}
-export type NameMigratedEvent = TypedEvent<
-  [BigNumber, string, BigNumber],
-  NameMigratedEventObject
->;
-
-export type NameMigratedEventFilter = TypedEventFilter<NameMigratedEvent>;
 
 export interface NameRegisteredEventObject {
   id: BigNumber;
@@ -774,17 +760,6 @@ export interface IRegistrar extends BaseContract {
     ControllerRemoved(
       controller?: PromiseOrValue<string> | null
     ): ControllerRemovedEventFilter;
-
-    "NameMigrated(uint256,address,uint256)"(
-      id?: PromiseOrValue<BigNumberish> | null,
-      owner?: PromiseOrValue<string> | null,
-      expires?: null
-    ): NameMigratedEventFilter;
-    NameMigrated(
-      id?: PromiseOrValue<BigNumberish> | null,
-      owner?: PromiseOrValue<string> | null,
-      expires?: null
-    ): NameMigratedEventFilter;
 
     "NameRegistered(uint256,address,uint256)"(
       id?: PromiseOrValue<BigNumberish> | null,

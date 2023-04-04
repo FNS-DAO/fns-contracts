@@ -28,29 +28,20 @@ contract PublicResolver is Multicallable, AddressResolver, ContentHashResolver, 
     // Logged when an operator is added or removed.
     event ApprovalForAll(address indexed owner, address indexed operator, bool approved);
 
-    constructor(
-        FNS _fns,
-        address _trustedRegistrarController,
-        address _trustedReverseRegistrar
-    ) {
+    constructor(FNS _fns, address _trustedRegistrarController, address _trustedReverseRegistrar) {
+        require(_trustedRegistrarController != address(0), "zero address");
+        require(_trustedReverseRegistrar != address(0), "zero address");
         fns = _fns;
         trustedRegistrarController = _trustedRegistrarController;
         trustedReverseRegistrar = _trustedReverseRegistrar;
     }
 
-    /**
-     * @dev See {IERC1155-setApprovalForAll}.
-     */
     function setApprovalForAll(address operator, bool approved) external {
-        require(msg.sender != operator, "ERC1155: setting approval status for self");
-
+        require(msg.sender != operator, "approve to caller");
         _operatorApprovals[msg.sender][operator] = approved;
         emit ApprovalForAll(msg.sender, operator, approved);
     }
 
-    /**
-     * @dev See {IERC1155-isApprovedForAll}.
-     */
     function isApprovedForAll(address account, address operator) public view returns (bool) {
         return _operatorApprovals[account][operator];
     }
@@ -63,7 +54,9 @@ contract PublicResolver is Multicallable, AddressResolver, ContentHashResolver, 
         return owner == msg.sender || isApprovedForAll(owner, msg.sender);
     }
 
-    function supportsInterface(bytes4 interfaceID)
+    function supportsInterface(
+        bytes4 interfaceID
+    )
         public
         view
         override(Multicallable, AddressResolver, ContentHashResolver, NameResolver, TextResolver)

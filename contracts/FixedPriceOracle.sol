@@ -7,8 +7,10 @@ import "./libs/Ownable.sol";
 import "./libs/IERC165.sol";
 
 // FixedPriceOracle sets a price in FIL
-contract FixedPriceOracle is IPriceOracle, Ownable {
+contract FixedPriceOracle is IPriceOracle, IERC165, Ownable {
     using StringUtils for *;
+
+    event PricesUpdated(uint256 price1, uint256 price2, uint256 price3, uint256 price4, uint256 price5);
 
     // Rent in base price units by length
     uint256 public price1Letter;
@@ -73,16 +75,17 @@ contract FixedPriceOracle is IPriceOracle, Ownable {
         uint256 price4,
         uint256 price5
     ) external onlyOwner {
-        require(price1 != 0, "0 price");
+        require(price1 != 0, "price1 is 0");
         require(price1 > price2 && price2 > price3 && price3 > price4 && price4 > price5, "invalid price");
         price1Letter = price1;
         price2Letter = price2;
         price3Letter = price3;
         price4Letter = price4;
         price5Letter = price5;
+        emit PricesUpdated(price1, price2, price3, price4, price5);
     }
 
-    function supportsInterface(bytes4 interfaceID) public view virtual returns (bool) {
+    function supportsInterface(bytes4 interfaceID) public pure override returns (bool) {
         return interfaceID == type(IERC165).interfaceId || interfaceID == type(IPriceOracle).interfaceId;
     }
 }

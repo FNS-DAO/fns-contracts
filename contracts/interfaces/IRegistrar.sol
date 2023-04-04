@@ -6,7 +6,6 @@ import "../libs/IERC721Enumerable.sol";
 interface IRegistrar is IERC721Enumerable {
     event ControllerAdded(address indexed controller);
     event ControllerRemoved(address indexed controller);
-    event NameMigrated(uint256 indexed id, address indexed owner, uint256 expires);
     event NameRegistered(uint256 indexed id, address indexed owner, uint256 expires);
     event NameRenewed(uint256 indexed id, uint256 expires);
 
@@ -28,9 +27,12 @@ interface IRegistrar is IERC721Enumerable {
     /**
      * @dev Register a name.
      */
-    function register(string calldata name, address owner, uint256 duration, address resolver)
-        external
-        returns (uint256);
+    function register(
+        string calldata name,
+        address owner,
+        uint256 duration,
+        address resolver
+    ) external returns (uint256);
 
     function renew(uint256 id, uint256 duration) external returns (uint256);
 

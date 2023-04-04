@@ -173,9 +173,11 @@ export interface FixedPriceOracleInterface extends utils.Interface {
 
   events: {
     "OwnershipTransferred(address,address)": EventFragment;
+    "PricesUpdated(uint256,uint256,uint256,uint256,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "PricesUpdated"): EventFragment;
 }
 
 export interface OwnershipTransferredEventObject {
@@ -189,6 +191,20 @@ export type OwnershipTransferredEvent = TypedEvent<
 
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
+
+export interface PricesUpdatedEventObject {
+  price1: BigNumber;
+  price2: BigNumber;
+  price3: BigNumber;
+  price4: BigNumber;
+  price5: BigNumber;
+}
+export type PricesUpdatedEvent = TypedEvent<
+  [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber],
+  PricesUpdatedEventObject
+>;
+
+export type PricesUpdatedEventFilter = TypedEventFilter<PricesUpdatedEvent>;
 
 export interface FixedPriceOracle extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -374,6 +390,21 @@ export interface FixedPriceOracle extends BaseContract {
       previousOwner?: PromiseOrValue<string> | null,
       newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
+
+    "PricesUpdated(uint256,uint256,uint256,uint256,uint256)"(
+      price1?: null,
+      price2?: null,
+      price3?: null,
+      price4?: null,
+      price5?: null
+    ): PricesUpdatedEventFilter;
+    PricesUpdated(
+      price1?: null,
+      price2?: null,
+      price3?: null,
+      price4?: null,
+      price5?: null
+    ): PricesUpdatedEventFilter;
   };
 
   estimateGas: {

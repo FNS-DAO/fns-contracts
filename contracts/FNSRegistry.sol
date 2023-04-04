@@ -19,7 +19,7 @@ contract FNSRegistry is FNS {
     // Permits modifications only by the owner of the specified node.
     modifier authorised(bytes32 node) {
         address rOwner = records[node].owner;
-        require(rOwner == msg.sender || operators[rOwner][msg.sender]);
+        require(rOwner == msg.sender || operators[rOwner][msg.sender], "unauthorized");
         _;
     }
 
@@ -50,11 +50,13 @@ contract FNSRegistry is FNS {
      * @param _resolver The address of the resolver.
      * @param _ttl The TTL in seconds.
      */
-    function setSubnodeRecord(bytes32 node, bytes32 label, address _owner, address _resolver, uint64 _ttl)
-        external
-        virtual
-        override
-    {
+    function setSubnodeRecord(
+        bytes32 node,
+        bytes32 label,
+        address _owner,
+        address _resolver,
+        uint64 _ttl
+    ) external virtual override {
         bytes32 subnode = setSubnodeOwner(node, label, _owner);
         _setResolverAndTTL(subnode, _resolver, _ttl);
     }
@@ -74,26 +76,22 @@ contract FNSRegistry is FNS {
      * @param label The hash of the label specifying the subnode.
      * @param _owner The address of the new owner.
      */
-    function setSubnodeOwner(bytes32 node, bytes32 label, address _owner)
-        public
-        virtual
-        override
-        authorised(node)
-        returns (bytes32)
-    {
+    function setSubnodeOwner(
+        bytes32 node,
+        bytes32 label,
+        address _owner
+    ) public virtual override authorised(node) returns (bytes32) {
         bytes32 subnode = keccak256(abi.encodePacked(node, label));
         _setOwner(subnode, _owner);
         emit NewOwner(node, label, _owner);
         return subnode;
     }
 
-    function setSubnodeResolver(bytes32 node, bytes32 label, address _resolver)
-        public
-        virtual
-        override
-        authorised(node)
-        returns (bytes32)
-    {
+    function setSubnodeResolver(
+        bytes32 node,
+        bytes32 label,
+        address _resolver
+    ) public virtual override authorised(node) returns (bytes32) {
         bytes32 subnode = keccak256(abi.encodePacked(node, label));
         if (_resolver != records[subnode].resolver) {
             records[subnode].resolver = _resolver;
@@ -129,6 +127,7 @@ contract FNSRegistry is FNS {
      * @param approved True if the operator is approved, false to revoke approval.
      */
     function setApprovalForAll(address operator, bool approved) external virtual override {
+        require(msg.sender != operator, "approve to caller");
         operators[msg.sender][operator] = approved;
         emit ApprovalForAll(msg.sender, operator, approved);
     }

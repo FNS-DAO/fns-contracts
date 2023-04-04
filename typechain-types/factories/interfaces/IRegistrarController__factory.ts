@@ -68,6 +68,25 @@ const _abi = [
       {
         indexed: false,
         internalType: "uint256",
+        name: "oldExpTime",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "newExpTime",
+        type: "uint256",
+      },
+    ],
+    name: "MaxExpirationTimeUpdated",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
         name: "oldMinLen",
         type: "uint256",
       },
@@ -153,6 +172,88 @@ const _abi = [
       },
     ],
     name: "NameRenewed",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "contract IPriceOracle",
+        name: "oldPriceOracle",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "contract IPriceOracle",
+        name: "newPriceOracle",
+        type: "address",
+      },
+    ],
+    name: "PriceOracleUpdated",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "oldRemain",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "newRemain",
+        type: "uint256",
+      },
+    ],
+    name: "RemainRegisterableUpdated",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "Withdrawn",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "token",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "WithdrawnERC20",
     type: "event",
   },
   {
@@ -343,7 +444,7 @@ const _abi = [
     stateMutability: "view",
     type: "function",
   },
-] as const;
+];
 
 export class IRegistrarController__factory {
   static readonly abi = _abi;

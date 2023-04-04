@@ -52,11 +52,11 @@ abstract contract AddressResolver is IAddressResolver, ResolverBase {
      * @param coinTypes The coin types of the addresses.
      * @param addrs The addresses to set.
      */
-    function setAddrs(bytes32 node, uint256[] calldata coinTypes, bytes[] calldata addrs)
-        public
-        virtual
-        authorised(node)
-    {
+    function setAddrs(
+        bytes32 node,
+        uint256[] calldata coinTypes,
+        bytes[] calldata addrs
+    ) public virtual authorised(node) {
         uint256 count = coinTypes.length;
         require(addrs.length == count, "length");
         for (uint256 i = 0; i < count; i++) {
@@ -75,7 +75,7 @@ abstract contract AddressResolver is IAddressResolver, ResolverBase {
     }
 
     function bytesToAddress(bytes memory b) internal pure returns (address payable a) {
-        require(b.length == 20);
+        require(b.length == 20, "invalid length");
         assembly {
             a := div(mload(add(b, 32)), exp(256, 12))
         }

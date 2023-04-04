@@ -132,15 +132,37 @@ export interface IRegistrarControllerInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "valid", data: BytesLike): Result;
 
   events: {
+    "MaxExpirationTimeUpdated(uint256,uint256)": EventFragment;
     "MinLengthUpdated(uint256,uint256)": EventFragment;
     "NameRegistered(string,bytes32,address,uint256,uint256,uint256)": EventFragment;
     "NameRenewed(string,bytes32,uint256,uint256)": EventFragment;
+    "PriceOracleUpdated(address,address)": EventFragment;
+    "RemainRegisterableUpdated(uint256,uint256)": EventFragment;
+    "Withdrawn(address,uint256)": EventFragment;
+    "WithdrawnERC20(address,address,uint256)": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "MaxExpirationTimeUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "MinLengthUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NameRegistered"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NameRenewed"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "PriceOracleUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "RemainRegisterableUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Withdrawn"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "WithdrawnERC20"): EventFragment;
 }
+
+export interface MaxExpirationTimeUpdatedEventObject {
+  oldExpTime: BigNumber;
+  newExpTime: BigNumber;
+}
+export type MaxExpirationTimeUpdatedEvent = TypedEvent<
+  [BigNumber, BigNumber],
+  MaxExpirationTimeUpdatedEventObject
+>;
+
+export type MaxExpirationTimeUpdatedEventFilter =
+  TypedEventFilter<MaxExpirationTimeUpdatedEvent>;
 
 export interface MinLengthUpdatedEventObject {
   oldMinLen: BigNumber;
@@ -181,6 +203,53 @@ export type NameRenewedEvent = TypedEvent<
 >;
 
 export type NameRenewedEventFilter = TypedEventFilter<NameRenewedEvent>;
+
+export interface PriceOracleUpdatedEventObject {
+  oldPriceOracle: string;
+  newPriceOracle: string;
+}
+export type PriceOracleUpdatedEvent = TypedEvent<
+  [string, string],
+  PriceOracleUpdatedEventObject
+>;
+
+export type PriceOracleUpdatedEventFilter =
+  TypedEventFilter<PriceOracleUpdatedEvent>;
+
+export interface RemainRegisterableUpdatedEventObject {
+  oldRemain: BigNumber;
+  newRemain: BigNumber;
+}
+export type RemainRegisterableUpdatedEvent = TypedEvent<
+  [BigNumber, BigNumber],
+  RemainRegisterableUpdatedEventObject
+>;
+
+export type RemainRegisterableUpdatedEventFilter =
+  TypedEventFilter<RemainRegisterableUpdatedEvent>;
+
+export interface WithdrawnEventObject {
+  to: string;
+  amount: BigNumber;
+}
+export type WithdrawnEvent = TypedEvent<
+  [string, BigNumber],
+  WithdrawnEventObject
+>;
+
+export type WithdrawnEventFilter = TypedEventFilter<WithdrawnEvent>;
+
+export interface WithdrawnERC20EventObject {
+  to: string;
+  token: string;
+  amount: BigNumber;
+}
+export type WithdrawnERC20Event = TypedEvent<
+  [string, string, BigNumber],
+  WithdrawnERC20EventObject
+>;
+
+export type WithdrawnERC20EventFilter = TypedEventFilter<WithdrawnERC20Event>;
 
 export interface IRegistrarController extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -342,6 +411,15 @@ export interface IRegistrarController extends BaseContract {
   };
 
   filters: {
+    "MaxExpirationTimeUpdated(uint256,uint256)"(
+      oldExpTime?: null,
+      newExpTime?: null
+    ): MaxExpirationTimeUpdatedEventFilter;
+    MaxExpirationTimeUpdated(
+      oldExpTime?: null,
+      newExpTime?: null
+    ): MaxExpirationTimeUpdatedEventFilter;
+
     "MinLengthUpdated(uint256,uint256)"(
       oldMinLen?: null,
       newMinLen?: null
@@ -380,6 +458,44 @@ export interface IRegistrarController extends BaseContract {
       cost?: null,
       expires?: null
     ): NameRenewedEventFilter;
+
+    "PriceOracleUpdated(address,address)"(
+      oldPriceOracle?: null,
+      newPriceOracle?: null
+    ): PriceOracleUpdatedEventFilter;
+    PriceOracleUpdated(
+      oldPriceOracle?: null,
+      newPriceOracle?: null
+    ): PriceOracleUpdatedEventFilter;
+
+    "RemainRegisterableUpdated(uint256,uint256)"(
+      oldRemain?: null,
+      newRemain?: null
+    ): RemainRegisterableUpdatedEventFilter;
+    RemainRegisterableUpdated(
+      oldRemain?: null,
+      newRemain?: null
+    ): RemainRegisterableUpdatedEventFilter;
+
+    "Withdrawn(address,uint256)"(
+      to?: PromiseOrValue<string> | null,
+      amount?: null
+    ): WithdrawnEventFilter;
+    Withdrawn(
+      to?: PromiseOrValue<string> | null,
+      amount?: null
+    ): WithdrawnEventFilter;
+
+    "WithdrawnERC20(address,address,uint256)"(
+      to?: PromiseOrValue<string> | null,
+      token?: null,
+      amount?: null
+    ): WithdrawnERC20EventFilter;
+    WithdrawnERC20(
+      to?: PromiseOrValue<string> | null,
+      token?: null,
+      amount?: null
+    ): WithdrawnERC20EventFilter;
   };
 
   estimateGas: {

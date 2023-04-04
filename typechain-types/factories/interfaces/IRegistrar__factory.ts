@@ -108,31 +108,6 @@ const _abi = [
         type: "uint256",
       },
     ],
-    name: "NameMigrated",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "id",
-        type: "uint256",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "owner",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "expires",
-        type: "uint256",
-      },
-    ],
     name: "NameRegistered",
     type: "event",
   },
@@ -617,7 +592,7 @@ const _abi = [
     stateMutability: "nonpayable",
     type: "function",
   },
-] as const;
+];
 
 export class IRegistrar__factory {
   static readonly abi = _abi;

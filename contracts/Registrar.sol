@@ -29,12 +29,12 @@ contract Registrar is IRegistrar, ERC721Enumerable, Ownable {
     }
 
     modifier live() {
-        require(fns.owner(baseNode) == address(this));
+        require(fns.owner(baseNode) == address(this), "not live");
         _;
     }
 
     modifier onlyController() {
-        require(controllers[msg.sender]);
+        require(controllers[msg.sender], "not controller");
         _;
     }
 
@@ -58,8 +58,8 @@ contract Registrar is IRegistrar, ERC721Enumerable, Ownable {
      * @param tokenId uint256 ID of the token to query the owner of
      * @return address currently marked as the owner of the given token ID
      */
-    function ownerOf(uint256 tokenId) public view override (IERC721, ERC721) returns (address) {
-        require(expiries[tokenId] > block.timestamp);
+    function ownerOf(uint256 tokenId) public view override(IERC721, ERC721) returns (address) {
+        require(expiries[tokenId] > block.timestamp, "expired");
         return super.ownerOf(tokenId);
     }
 
@@ -120,13 +120,12 @@ contract Registrar is IRegistrar, ERC721Enumerable, Ownable {
      * @param _owner The address that should own the registration.
      * @param duration Duration in seconds for the registration.
      */
-    function register(string calldata _name, address _owner, uint256 duration, address resolver)
-        external
-        override
-        live
-        onlyController
-        returns (uint256)
-    {
+    function register(
+        string calldata _name,
+        address _owner,
+        uint256 duration,
+        address resolver
+    ) external override live onlyController returns (uint256) {
         uint256 expireTime = _register(_name, _owner, duration, true, resolver);
         return expireTime;
     }
@@ -137,19 +136,21 @@ contract Registrar is IRegistrar, ERC721Enumerable, Ownable {
      * @param _owner The address that should own the registration.
      * @param duration Duration in seconds for the registration.
      */
-    function registerOnly(string calldata _name, address _owner, uint256 duration)
-        external
-        live
-        onlyController
-        returns (uint256)
-    {
+    function registerOnly(
+        string calldata _name,
+        address _owner,
+        uint256 duration
+    ) external live onlyController returns (uint256) {
         return _register(_name, _owner, duration, false, address(0));
     }
 
-    function _register(string memory _name, address _owner, uint256 duration, bool updateRegistry, address resolver)
-        internal
-        returns (uint256)
-    {
+    function _register(
+        string memory _name,
+        address _owner,
+        uint256 duration,
+        bool updateRegistry,
+        address resolver
+    ) internal returns (uint256) {
         uint256 id = uint256(keccak256(bytes(_name)));
         require(available(id), "not available");
         // Prevent future overflow
@@ -166,23 +167,21 @@ contract Registrar is IRegistrar, ERC721Enumerable, Ownable {
         bytes32 node = keccak256(abi.encodePacked(baseNode, bytes32(id)));
         nodeToId[node] = id;
 
+        emit NameRegistered(id, _owner, block.timestamp + duration);
+
         if (updateRegistry) {
             fns.setSubnodeOwner(baseNode, bytes32(id), _owner);
             if (resolver != address(0)) {
                 fns.setSubnodeResolver(baseNode, bytes32(id), resolver);
             }
         }
-
-        emit NameRegistered(id, _owner, block.timestamp + duration);
-
         return block.timestamp + duration;
     }
 
     function renew(uint256 id, uint256 duration) external override live onlyController returns (uint256) {
+        require(expiries[id] > 0, "unregistered");
         // Name must be registered here or in grace period
         require(expiries[id] + GRACE_PERIOD >= block.timestamp, "grace period");
-        // Prevent future overflow
-        require(expiries[id] + duration + GRACE_PERIOD > duration + GRACE_PERIOD, "future overflow");
 
         expiries[id] += duration;
         emit NameRenewed(id, expiries[id]);
@@ -197,7 +196,7 @@ contract Registrar is IRegistrar, ERC721Enumerable, Ownable {
         fns.setSubnodeOwner(baseNode, bytes32(id), _owner);
     }
 
-    function supportsInterface(bytes4 interfaceId) public view override (ERC721Enumerable, IERC165) returns (bool) {
+    function supportsInterface(bytes4 interfaceId) public view override(ERC721Enumerable, IERC165) returns (bool) {
         return interfaceId == type(IRegistrar).interfaceId || super.supportsInterface(interfaceId);
     }
 }

@@ -18,12 +18,12 @@ import "./libs/StringUtils.sol";
 contract RegistrarController is IRegistrarController, Ownable, IERC165 {
     using StringUtils for *;
     using Address for address;
+    using Address for address payable;
     using SafeERC20 for IERC20;
 
     uint256 public constant MIN_REGISTRATION_DURATION = 28 days;
     // namehash("fil")
     bytes32 private constant FIL_NODE = 0x78f6b1389af563cc5c91f234ea46b055e49658d8b999eeb9e0baef7dbbc93fdb;
-    uint64 private constant MAX_EXPIRY = type(uint64).max;
     IRegistrar public immutable base;
     IReverseRegistrar public immutable reverseRegistrar;
     IPriceOracle public prices;
@@ -98,18 +98,17 @@ contract RegistrarController is IRegistrarController, Ownable, IERC165 {
         }
 
         bytes32 label = keccak256(bytes(name));
+        emit NameRegistered(name, label, _owner, price.base, price.premium, expires);
+
         if (data.length > 0) {
             _setRecords(resolver, label, data);
         }
-
         if (reverseRecord) {
             _setReverseRecord(name, resolver, msg.sender);
         }
 
-        emit NameRegistered(name, label, _owner, price.base, price.premium, expires);
-
         if (msg.value > totalPrice) {
-            payable(msg.sender).transfer(msg.value - totalPrice);
+            payable(msg.sender).sendValue(msg.value - totalPrice);
         }
     }
 
@@ -125,11 +124,11 @@ contract RegistrarController is IRegistrarController, Ownable, IERC165 {
             revert InvalidExpirationTime();
         }
 
-        if (msg.value > price.base) {
-            payable(msg.sender).transfer(msg.value - price.base);
-        }
-
         emit NameRenewed(name, label, msg.value, expires);
+
+        if (msg.value > price.base) {
+            payable(msg.sender).sendValue(msg.value - price.base);
+        }
     }
 
     function supportsInterface(bytes4 interfaceID) external pure returns (bool) {
@@ -151,6 +150,7 @@ contract RegistrarController is IRegistrarController, Ownable, IERC165 {
     /********************* Owner functions *********************/
 
     function setPriceOracle(IPriceOracle _prices) external onlyOwner {
+        emit PriceOracleUpdated(prices, _prices);
         prices = _prices;
     }
 
@@ -158,17 +158,21 @@ contract RegistrarController is IRegistrarController, Ownable, IERC165 {
         if (to == address(0)) {
             revert InvalidRecipient();
         }
-        payable(to).transfer(address(this).balance);
+        uint256 amount = address(this).balance;
+        emit Withdrawn(to, amount);
+        payable(to).sendValue(amount);
     }
 
     function withdrawERC20(IERC20 token, address to, uint256 amount) external onlyOwner {
         if (to == address(0)) {
             revert InvalidRecipient();
         }
+        emit WithdrawnERC20(to, address(token), amount);
         token.safeTransfer(to, amount);
     }
 
     function setMaxExpirationTime(uint256 expTime) external onlyOwner {
+        emit MaxExpirationTimeUpdated(_maxExpirationTime, expTime);
         _maxExpirationTime = expTime;
     }
 
@@ -181,6 +185,7 @@ contract RegistrarController is IRegistrarController, Ownable, IERC165 {
     }
 
     function setRemainRegisterable(uint256 count) external onlyOwner {
+        emit RemainRegisterableUpdated(_remainRegisterable, count);
         _remainRegisterable = count;
     }
 

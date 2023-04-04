@@ -92,7 +92,7 @@ contract ReverseRegistrar is Controllable, IReverseRegistrar {
      * @param name The name to set for this address.
      * @return The FNS node hash of the reverse record.
      */
-    function setName(string memory name) public override returns (bytes32) {
+    function setName(string calldata name) public override returns (bytes32) {
         return setNameForAddr(msg.sender, msg.sender, address(defaultResolver), name);
     }
 
