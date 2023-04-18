@@ -6,6 +6,16 @@ FilNS contracts
 
 ### Filecoin Mainnet
 
+* Multicall: 0x8ccEEf57F2E092562DBB969f38B68711F493b543
+* FNSRegistry: 0x916915d0d41EaA8AAEd70b2A5Fb006FFc213961b
+* ReverseRegistrar: 0xc49833d827b01e1465c65221A59885Fb71614a26
+* Registrar: 0x45d9d6408d5159a379924cf423cb7e15C00fA81f
+* FixedPriceOracle: 0x5e838eF42d5D1D8B3F691d7dbFC49D8a9f6aC577
+* RegistrarController: 0xDA3c407a23Ef96930f1A07903fB8360D8926991E
+* PublicResolver: 0xed9bd04b1BB87Abe2EfF583A977514940c95699c
+
+### Filecoin Mainnet - pre
+
 * FNSRegistry: 0x5eefe33358d32a61aceb2a13640b72bb6f4bfd11
 * ReverseRegistrar: 0x805bCf9D3038c0e0F0e8Ab4FbeDaFeD62B300443
 * Registrar: 0x6dfb3d26c3b9e45d95ca035cc06033532c08beb9

@@ -53,7 +53,7 @@ const _abi = [
     stateMutability: "nonpayable",
     type: "function",
   },
-] as const;
+];
 
 export class IMulticallable__factory {
   static readonly abi = _abi;
